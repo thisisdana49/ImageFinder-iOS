@@ -13,7 +13,6 @@ class SearchViewController: UIViewController {
     
     override func loadView() {
         view = mainView
-        view.backgroundColor = .white
     }
     
     override func viewDidLoad() {

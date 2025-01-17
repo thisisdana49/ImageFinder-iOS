@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class BaseView: UIView {
     
@@ -13,8 +14,8 @@ class BaseView: UIView {
         super.init(frame: frame)
         
         configureHierarchy()
-        configureLayout()
         configureView()
+        configureLayout()
     }
     
     func configureHierarchy() {}
