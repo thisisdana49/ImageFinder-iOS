@@ -20,6 +20,7 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         
         configureNavController()
+        configureCollectionView()
     }
 
 
@@ -51,5 +52,26 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         print(#function)
+    }
+}
+
+//MARK:
+extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.id, for: indexPath) as? SearchCollectionViewCell else { return UICollectionViewCell() }
+        
+        return cell
+    }
+    
+    func configureCollectionView() {
+        mainView.collectionView.delegate = self
+        mainView.collectionView.dataSource = self
+        // TODO: Prefetch delegate
+        mainView.collectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.id)
     }
 }

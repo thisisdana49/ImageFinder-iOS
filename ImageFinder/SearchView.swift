@@ -10,6 +10,7 @@ import SnapKit
 
 class SearchView: BaseView {
     
+    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     let scrollView = UIScrollView()
     let stackView =  UIStackView()
     let customButton1 = CustomFilterButton(title: "블랙", tag: 0)
@@ -25,6 +26,7 @@ class SearchView: BaseView {
     override func configureHierarchy() {
         addSubview(scrollView)
         scrollView.addSubview(stackView)
+        addSubview(collectionView)
     }
     
     override func configureLayout() {
@@ -36,6 +38,12 @@ class SearchView: BaseView {
         stackView.snp.makeConstraints { make in
             make.edges.equalTo(scrollView)
             make.height.equalTo(55)
+        }
+        
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(stackView.snp.bottom)
+            make.horizontalEdges.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
     }
     
@@ -68,5 +76,21 @@ class SearchView: BaseView {
         let label5 = customButton5
         label5.backgroundColor = .orange
         stackView.addArrangedSubview(label5)
+    }
+    
+    
+    internal func createCollectionViewLayout() -> UICollectionViewFlowLayout {
+        let spacing: CGFloat = 5
+        let deviceWidth = UIScreen.main.bounds.width
+        let cellWidth = deviceWidth - spacing
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = spacing
+        layout.minimumInteritemSpacing = spacing
+        layout.itemSize = CGSizeMake(cellWidth / 2, (cellWidth / 2) * 1.2)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        
+        return layout
     }
 }
