@@ -7,9 +7,9 @@
 
 import UIKit
 
-class SearchCollectionViewCell: UICollectionViewCell {
+class KeywordSearchCollectionViewCell: UICollectionViewCell {
     
-    static let id = "SearchCollectionViewCell"
+    static let id = "KeywordSearchCollectionViewCell"
 
     let thumbnailImageView = UIImageView()
     let starBaseView =  UILabel()

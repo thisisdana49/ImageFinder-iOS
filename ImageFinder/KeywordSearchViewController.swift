@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+class KeywordSearchViewController: UIViewController {
 
     let mainView = SearchView()
     
@@ -48,21 +48,21 @@ class SearchViewController: UIViewController {
 }
 
 // MARK: UISearchBar Delegate
-extension SearchViewController: UISearchBarDelegate {
+extension KeywordSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         print(#function)
     }
 }
 
 //MARK:
-extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension KeywordSearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.id, for: indexPath) as? SearchCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KeywordSearchCollectionViewCell.id, for: indexPath) as? KeywordSearchCollectionViewCell else { return UICollectionViewCell() }
         
         return cell
     }
@@ -71,6 +71,6 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
         // TODO: Prefetch delegate
-        mainView.collectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.id)
+        mainView.collectionView.register(KeywordSearchCollectionViewCell.self, forCellWithReuseIdentifier: KeywordSearchCollectionViewCell.id)
     }
 }
