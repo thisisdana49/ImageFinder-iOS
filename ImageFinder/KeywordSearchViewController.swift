@@ -32,7 +32,6 @@ class KeywordSearchViewController: UIViewController {
         }
     }
 
-
     func configureNavController() {
         let searchController = UISearchController()
         let searchBar = searchController.searchBar
@@ -63,7 +62,6 @@ extension KeywordSearchViewController: UISearchBarDelegate {
         guard let inputWord = searchBar.text else { return }
         keyword = inputWord
         callRequest()
-        print(#function, inputWord)
     }
 }
 
@@ -81,6 +79,14 @@ extension KeywordSearchViewController: UICollectionViewDelegate, UICollectionVie
         cell.configureData(item: photo)
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(#function)
+        let vc = ImageDetailViewController()
+        vc.photo = photos[indexPath.row]
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func configureCollectionView() {

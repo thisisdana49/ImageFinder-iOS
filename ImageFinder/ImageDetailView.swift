@@ -14,7 +14,7 @@ class ImageDetailView: BaseView {
     
     let topView = UIView()
     let informView = UIStackView()
-    let imageView = UIView()
+    let imageView = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,33 +37,68 @@ class ImageDetailView: BaseView {
     }
     
     override func configureView() {
-        scrollView.backgroundColor = .lightGray
-        contentView.backgroundColor = .systemMint
-        
+        scrollView.backgroundColor = .white
+        contentView.backgroundColor = .white
+
         contentView.addSubview(topView)
         contentView.addSubview(informView)
         contentView.addSubview(imageView)
-        
+
         topView.backgroundColor = .systemOrange
         informView.backgroundColor = .systemPurple
         imageView.backgroundColor = .black
-        
+
         topView.snp.makeConstraints { make in
-            make.top.horizontalEdges.equalTo(contentView).inset(20)
-            make.height.equalTo(400)
+            make.top.horizontalEdges.equalTo(contentView)
+            make.height.equalTo(80)
         }
-        
+
         informView.snp.makeConstraints { make in
-            make.bottom.horizontalEdges.equalTo(contentView).inset(20)
+            make.bottom.horizontalEdges.equalTo(contentView)
             make.height.equalTo(400)
         }
-        
+
         imageView.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(contentView).inset(20)
-            make.top.equalTo(topView.snp.bottom).offset(20)
-            make.bottom.equalTo(informView.snp.top).offset(-20)
-            make.height.greaterThanOrEqualTo(400)
+            make.horizontalEdges.equalTo(contentView)
+            make.top.equalTo(topView.snp.bottom)
+            make.bottom.equalTo(informView.snp.top)
+
+            make.height.equalTo(imageView.snp.width).multipliedBy(0.75).priority(.medium)
+        }
+
+        imageView.contentMode = .scaleAspectFit
+    }
+
+    func configureData(photo: PhotoDetail?, photoStatistics: PhotoStatistic?) {
+        guard let photo = photo, let imageURL = URL(string: photo.urls.raw) else { return }
+
+        imageView.kf.setImage(with: imageURL) { [weak self] result in
+            guard let self = self else { return }
+
+            switch result {
+            case .success(let imageResult):
+                let image = imageResult.image
+                let imageWidth = image.size.width
+                let imageHeight = image.size.height
+                
+                let aspectRatio = imageHeight / imageWidth
+                
+                self.imageView.snp.remakeConstraints { make in
+                    make.horizontalEdges.equalTo(self.contentView)
+                    make.top.equalTo(self.topView.snp.bottom)
+                    make.bottom.equalTo(self.informView.snp.top)
+
+                    make.height.equalTo(self.imageView.snp.width).multipliedBy(aspectRatio)
+                }
+
+                self.setNeedsLayout()
+                self.layoutIfNeeded()
+
+            case .failure(let error):
+                print("Image loading failed: \(error.localizedDescription)")
+            }
         }
     }
+
 }
 
