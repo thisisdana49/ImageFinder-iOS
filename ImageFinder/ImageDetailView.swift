@@ -47,6 +47,7 @@ class ImageDetailView: BaseView {
         topView.backgroundColor = .systemOrange
         informView.backgroundColor = .systemPurple
         imageView.backgroundColor = .black
+        imageView.contentMode = .scaleAspectFit
 
         topView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(contentView)
@@ -65,8 +66,6 @@ class ImageDetailView: BaseView {
 
             make.height.equalTo(imageView.snp.width).multipliedBy(0.75).priority(.medium)
         }
-
-        imageView.contentMode = .scaleAspectFit
     }
 
     func configureData(photo: PhotoDetail?, photoStatistics: PhotoStatistic?) {

@@ -45,4 +45,20 @@ class NetworkManager {
                 }
             }
     }
+    
+    func searchWithTopic(topic: String, completionHandler: @escaping ([PhotoDetail]) -> Void) {
+        let url = "https://api.unsplash.com/topics/\(topic)/photos?page=1&client_id=\(accessKey)"
+        
+        AF.request(url, method: .get)
+            .validate(statusCode: 200..<300)
+            .responseDecodable(of: [PhotoDetail].self) { response in
+                switch response.result {
+                case .success(let value):
+                    dump(value.first?.id)
+                    completionHandler(value)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+    }
 }

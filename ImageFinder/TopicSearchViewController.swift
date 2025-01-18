@@ -9,6 +9,12 @@ import UIKit
 
 class TopicSearchViewController: UIViewController {
     
+    let keywords: [String] = ["golden-hour", "business-work", "architecture-interior"]
+    
+    var photosOne: [PhotoDetail] = []
+    var photosTwo: [PhotoDetail] = []
+    var photosThree: [PhotoDetail] = []
+    
     let mainView = TopicSearchView()
     
     override func loadView() {
@@ -17,6 +23,8 @@ class TopicSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        callRequest()
         
         configureNavController()
         configureCollectionView()
@@ -27,12 +35,18 @@ class TopicSearchViewController: UIViewController {
         self.navigationItem.title = "OUR TOPIC"
     }
     
+    private func callRequest() {
+        NetworkManager.shared.searchWithTopic(topic: keywords[0]) { value in
+            self.photosOne = value
+            self.mainView.collectionView.reloadData()
+        }
+    }
 }
 
 // MARK: UICollectionView Delegate, UICollectionView DataSource
 extension TopicSearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return photosOne.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
