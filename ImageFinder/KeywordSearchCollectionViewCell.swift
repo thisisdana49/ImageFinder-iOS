@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class KeywordSearchCollectionViewCell: UICollectionViewCell {
     
@@ -29,15 +30,15 @@ class KeywordSearchCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    func configureData(item: ItemDetail) {
-//        if let image = URL(string: item.image) {
-//            thumbnailImageView.kf.setImage(with: image)
-//            thumbnailImageView.kf.setImage(with: image)
-//        }
-//        mallNameLabel.text = item.mallName
+    func configureData(item: PhotoDetail) {
+        if let image = URL(string: item.urls.raw) {
+            thumbnailImageView.kf.setImage(with: image)
+        }
+        
+        starLabel.text = "★ \(item.likes)"
 //        titleLabel.text = item.title.cleanedTag()
-//        priceLabel.text = Int(item.lprice)?.formatted(.number)
-//    }
+//        star.text = Int(item.lprice)?.formatted(.number)
+    }
 
     internal func configureHierarchy() {
         contentView.addSubview(thumbnailImageView)
@@ -48,29 +49,30 @@ class KeywordSearchCollectionViewCell: UICollectionViewCell {
     
     internal func configureLayout() {
         thumbnailImageView.snp.makeConstraints { make in
-            make.size.equalToSuperview()
+            make.size.equalTo(contentView.snp.size)
             make.center.equalToSuperview()
         }
  
         starBaseView.snp.makeConstraints { make in
-            make.size.equalTo(thumbnailImageView)
+            make.size.equalTo(contentView.snp.size)
         }
         
         starLabel.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(8)
             make.leading.equalToSuperview().inset(8)
-            make.width.equalTo(120)
-            make.height.equalTo(40)
+            make.width.equalTo(100)
+            make.height.equalTo(30)
         }
     }
     
     internal func configureView() {
         thumbnailImageView.contentMode = .scaleAspectFill
-        thumbnailImageView.image = UIImage(systemName: "star.fill")
-        
+        // MARK: 왜 해줘야 하지?
+        thumbnailImageView.clipsToBounds = true
         starLabel.backgroundColor = .black.withAlphaComponent(0.3)
-        starLabel.layer.cornerRadius = 20
-        starLabel.text = "★ 1,234"
+        
+        starLabel.clipsToBounds = true
+        starLabel.layer.cornerRadius = 15
     }
 
 }

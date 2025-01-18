@@ -9,6 +9,7 @@ import UIKit
 
 class KeywordSearchViewController: UIViewController {
 
+    var photos: [PhotoDetail] = []
     var keyword: String = ""
     
     let mainView = KeywordSearchView()
@@ -25,7 +26,10 @@ class KeywordSearchViewController: UIViewController {
     }
     
     private func callRequest() {
-        NetworkManager.shared.searchWithKeyWord(keyword: keyword)
+        NetworkManager.shared.searchWithKeyWord(keyword: keyword) { value in
+            self.photos = value.results
+            self.mainView.collectionView.reloadData()
+        }
     }
 
 
@@ -67,11 +71,14 @@ extension KeywordSearchViewController: UISearchBarDelegate {
 extension KeywordSearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return photos.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KeywordSearchCollectionViewCell.id, for: indexPath) as? KeywordSearchCollectionViewCell else { return UICollectionViewCell() }
+        let photo = photos[indexPath.row]
+        
+        cell.configureData(item: photo)
         
         return cell
     }
