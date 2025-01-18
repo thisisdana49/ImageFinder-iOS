@@ -9,6 +9,8 @@ import UIKit
 
 class KeywordSearchViewController: UIViewController {
 
+    var keyword: String = ""
+    
     let mainView = KeywordSearchView()
     
     override func loadView() {
@@ -20,6 +22,10 @@ class KeywordSearchViewController: UIViewController {
         
         configureNavController()
         configureCollectionView()
+    }
+    
+    private func callRequest() {
+        NetworkManager.shared.searchWithKeyWord(keyword: keyword)
     }
 
 
@@ -50,7 +56,10 @@ class KeywordSearchViewController: UIViewController {
 // MARK: UISearchBar Delegate
 extension KeywordSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print(#function)
+        guard let inputWord = searchBar.text else { return }
+        keyword = inputWord
+        callRequest()
+        print(#function, inputWord)
     }
 }
 

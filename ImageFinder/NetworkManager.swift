@@ -14,22 +14,21 @@ class NetworkManager {
     
     private init() {}
     
-    func searchItem(searchWord: String, sortWith sortStandard: String, start: Int, display: Int, completionHandler: @escaping (Item) -> Void) {
-        let url = "https://openapi.naver.com/v1/search/shop.json?query=\(searchWord)&sort=\(sortStandard)&start=\(start)&display=\(display)"
-        let header: HTTPHeaders = [
-            "X-Naver-Client-Id": naverClientID,
-            "X-Naver-Client-Secret": naverClientSecret
-        ]
-        AF.request(url, method: .get, headers: header)
-            .validate(statusCode: 200..<300)
-            .responseDecodable(of: Item.self) { response in
-            switch response.result {
-            case .success(let value):
-                completionHandler(value)
-
-            case .failure(let error):
-                print(error)
+    func searchWithKeyWord(keyword: String, orderBy: String = "latest", page: Int = 1) {
+        let url = "https://api.unsplash.com/search/photos?query=\(keyword)&page=1&client_id=\(accessKey)"
+        AF.request(url, method: .get)
+//            .validate(statusCode: 200..<300)
+            .responseString { response in
+                dump(response.result)
             }
-        }
+//            .responseDecodable(of: Item.self) { response in
+//            switch response.result {
+//            case .success(let value):
+//                completionHandler(value)
+//
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
     }
 }

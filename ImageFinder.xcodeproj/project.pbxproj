@@ -10,9 +10,11 @@
 		3E5A19852D3A571600DE7BCD /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3E5A19842D3A571600DE7BCD /* SnapKit */; };
 		3E5A19882D3A572600DE7BCD /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 3E5A19872D3A572600DE7BCD /* Alamofire */; };
 		3E5A198B2D3A572F00DE7BCD /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 3E5A198A2D3A572F00DE7BCD /* Kingfisher */; };
+		3E5A1A082D3B7E5500DE7BCD /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A1A072D3B7E5500DE7BCD /* APIKey.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3E5A1A072D3B7E5500DE7BCD /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		3EF61D1B2D3A547200AF95F7 /* ImageFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -54,6 +56,7 @@
 		3EF61D122D3A547200AF95F7 = {
 			isa = PBXGroup;
 			children = (
+				3E5A1A072D3B7E5500DE7BCD /* APIKey.swift */,
 				3EF61D1D2D3A547200AF95F7 /* ImageFinder */,
 				3EF61D1C2D3A547200AF95F7 /* Products */,
 			);
@@ -149,6 +152,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E5A1A082D3B7E5500DE7BCD /* APIKey.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
