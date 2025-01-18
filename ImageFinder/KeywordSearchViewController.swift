@@ -9,7 +9,7 @@ import UIKit
 
 class KeywordSearchViewController: UIViewController {
 
-    let mainView = SearchView()
+    let mainView = KeywordSearchView()
     
     override func loadView() {
         view = mainView
@@ -54,7 +54,7 @@ extension KeywordSearchViewController: UISearchBarDelegate {
     }
 }
 
-//MARK:
+// MARK: UICollectionView Delegate, UICollectionView DataSource
 extension KeywordSearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

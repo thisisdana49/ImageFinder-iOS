@@ -1,5 +1,5 @@
 //
-//  SearchView.swift
+//  KeywordSearchView.swift
 //  ImageFinder
 //
 //  Created by 조다은 on 1/17/25.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchView: BaseView {
+class KeywordSearchView: BaseView {
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     let scrollView = UIScrollView()
