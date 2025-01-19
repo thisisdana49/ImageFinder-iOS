@@ -28,7 +28,7 @@ struct PhotoDetail: Decodable {
     let user: User
     
     var size: String {
-        return "\(width) * \(height)"
+        return "\(width) X \(height)"
     }
     
     enum CodingKeys: String, CodingKey {
