@@ -14,8 +14,8 @@ class NetworkManager {
     
     private init() {}
     
-    func searchWithKeyWord(keyword: String, orderBy: String = "latest", page: Int, completionHandler: @escaping (PhotoModel) -> Void) {
-        let url = "https://api.unsplash.com/search/photos?query=\(keyword)&page=\(page)&client_id=\(accessKey)"
+    func searchWithKeyWord(keyword: String, page: Int, orderBy: String, color: String = "blue", completionHandler: @escaping (PhotoModel) -> Void) {
+        let url = "https://api.unsplash.com/search/photos?query=\(keyword)&page=\(page)&order_by=\(orderBy)&color=\(color)&client_id=\(accessKey)"
         
         AF.request(url, method: .get)
             .validate(statusCode: 200..<300)

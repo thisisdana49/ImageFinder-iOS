@@ -12,6 +12,9 @@ class KeywordSearchView: BaseView {
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     let scrollView = UIScrollView()
     let stackView =  UIStackView()
+    
+    let orderButton = UIButton()
+    
     let customButton1 = CustomFilterButton(title: "블랙", tag: 0)
     let customButton2 = CustomFilterButton(title: "블랙", tag: 0)
     let customButton3 = CustomFilterButton(title: "블랙", tag: 0)
@@ -24,11 +27,17 @@ class KeywordSearchView: BaseView {
     
     override func configureHierarchy() {
         addSubview(scrollView)
+        addSubview(orderButton)
         scrollView.addSubview(stackView)
         addSubview(collectionView)
     }
     
     override func configureLayout() {
+        orderButton.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide)
+            make.trailing.equalTo(safeAreaLayoutGuide)
+        }
+        
         scrollView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(safeAreaLayoutGuide)
             make.height.equalTo(55)
@@ -51,6 +60,11 @@ class KeywordSearchView: BaseView {
         
         stackView.backgroundColor = .systemBlue
         stackView.spacing = 10
+        
+        orderButton.setTitle("관련순", for: .normal)
+        orderButton.setTitle("최신순", for: .selected)
+        orderButton.isUserInteractionEnabled = true
+        orderButton.backgroundColor = .red
         
         configureButton()
     }

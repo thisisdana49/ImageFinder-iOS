@@ -13,6 +13,8 @@ class KeywordSearchViewController: UIViewController {
     var keyword: String = "" {
         didSet { page = 1 }
     }
+    var orderBy : String = "relevant"
+    
     var page: Int = 1
     var totalPages: Int = 0
     var isEnd: Bool {
@@ -28,13 +30,16 @@ class KeywordSearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        mainView.orderButton.addTarget(self, action: #selector(orderButtonTapped), for: .touchUpInside)
+        
         configureNavController()
         configureCollectionView()
     }
     
     private func callRequest() {
-        NetworkManager.shared.searchWithKeyWord(keyword: keyword, page: page) { value in
+        NetworkManager.shared.searchWithKeyWord(keyword: keyword, page: page, orderBy: orderBy) { value in
             if self.page == 1 {
+                print(#function, self.orderBy)
                 self.totalPages = value.totalPages
                 self.photos = value.results
             } else {
@@ -48,6 +53,14 @@ class KeywordSearchViewController: UIViewController {
         }
     }
 
+    @objc
+    func orderButtonTapped(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        orderBy = sender.isSelected ? "latest" : "relevant"
+        print(#function, sender.isSelected, orderBy)
+        callRequest()
+    }
+    
     func configureNavController() {
         let searchController = UISearchController()
         let searchBar = searchController.searchBar
