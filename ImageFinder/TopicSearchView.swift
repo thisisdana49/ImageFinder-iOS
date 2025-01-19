@@ -9,48 +9,92 @@ import UIKit
 
 class TopicSearchView: BaseView {
     
+    let scrollView = UIScrollView()
+    let contentView = UIView()
+    
+    let titleLabel1 = UILabel()
+    let titleLabel2 = UILabel()
+    let titleLabel3 = UILabel()
+    
     lazy var collectionView1 = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     lazy var collectionView2 = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     lazy var collectionView3 = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
+    
+    lazy var titlesAndCollectionViews = [
+        (titleLabel1, collectionView1),
+        (titleLabel2, collectionView2),
+        (titleLabel3, collectionView3)
+    ]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
     override func configureHierarchy() {
-        addSubview(collectionView1)
-        addSubview(collectionView2)
-        addSubview(collectionView3)
+        addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        
+        titlesAndCollectionViews.forEach { (title, collectionView) in
+            contentView.addSubview(title)
+            contentView.addSubview(collectionView)
+        }
     }
     
     override func configureLayout() {
-        collectionView1.snp.makeConstraints { make in
-            make.top.horizontalEdges.equalTo(safeAreaLayoutGuide)
-            make.height.equalTo(240)
+        scrollView.isScrollEnabled = true
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalTo(safeAreaLayoutGuide)
         }
-        collectionView2.snp.makeConstraints { make in
-            make.top.equalTo(collectionView1.snp.bottom)
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide)
-            make.height.equalTo(240)
+
+        contentView.snp.makeConstraints { make in
+            make.width.equalTo(scrollView.snp.width)
+            make.edges.equalTo(scrollView)
         }
-        collectionView3.snp.makeConstraints { make in
-            make.top.equalTo(collectionView2.snp.bottom)
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide)
-            make.height.equalTo(240)
+
+        var lastView: UIView? = nil
+        titlesAndCollectionViews.forEach { (title, collectionView) in
+            title.snp.makeConstraints { make in
+                if let last = lastView {
+                    make.top.equalTo(last.snp.bottom).offset(30)
+                } else {
+                    make.top.equalTo(contentView.snp.top).offset(20)
+                }
+                make.horizontalEdges.equalTo(contentView).inset(16)
+            }
+            
+            collectionView.snp.makeConstraints { make in
+                make.top.equalTo(title.snp.bottom).offset(10)
+                make.width.equalTo(contentView)
+                make.leading.equalTo(contentView).offset(16)
+                make.height.equalTo(240)
+            }
+            collectionView.showsHorizontalScrollIndicator = false
+            
+            lastView = collectionView
+        }
+        
+        lastView?.snp.makeConstraints { make in
+            make.bottom.equalTo(contentView.snp.bottom).offset(-20)
         }
     }
+
     
     override func configureView() {
         backgroundColor = .white
-        collectionView1.backgroundColor = .systemGray
-        collectionView2.backgroundColor = .systemGray
-        collectionView3.backgroundColor = .systemGray
+        titlesAndCollectionViews.forEach { (title, _) in
+            title.font = UIFont.systemFont(ofSize: 22, weight: .bold)
+            title.textAlignment = .left
+            title.textColor = .black
+        }
+        titleLabel1.text = "골든 아워"
+        titleLabel2.text = "비즈니스 및 업무"
+        titleLabel3.text = "건축 및 인테리어"
     }
     
     internal func createCollectionViewLayout() -> UICollectionViewFlowLayout {
-        let spacing: CGFloat = 5
+        let spacing: CGFloat = 10
         let deviceWidth = UIScreen.main.bounds.width
-        let cellWidth = deviceWidth - spacing
+        let cellWidth = deviceWidth - 20
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal

@@ -144,7 +144,7 @@ extension KeywordSearchViewController: UICollectionViewDelegate, UICollectionVie
         if photos.count == 0 && !isNoData {
             collectionView.setEmptyMessage("사진을 검색해보세요.")
         } else if photos.count == 0 && isNoData {
-            collectionView.setEmptyMessage("검색 결과가 없어요😔")
+            collectionView.setEmptyMessage("\"\(keyword)\"에 대한 검색 결과가 없어요😔")
         } else {
             collectionView.restore()
         }
@@ -152,7 +152,7 @@ extension KeywordSearchViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ThumbnailCollectionView.id, for: indexPath) as? ThumbnailCollectionView else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KeywordSearchCollectionViewCell.id, for: indexPath) as? KeywordSearchCollectionViewCell else { return UICollectionViewCell() }
         let photo = photos[indexPath.row]
         
         cell.configureData(item: photo)
@@ -172,6 +172,6 @@ extension KeywordSearchViewController: UICollectionViewDelegate, UICollectionVie
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
         mainView.collectionView.prefetchDataSource = self
-        mainView.collectionView.register(ThumbnailCollectionView.self, forCellWithReuseIdentifier: ThumbnailCollectionView.id)
+        mainView.collectionView.register(KeywordSearchCollectionViewCell.self, forCellWithReuseIdentifier: KeywordSearchCollectionViewCell.id)
     }
 }
