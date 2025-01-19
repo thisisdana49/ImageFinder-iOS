@@ -9,7 +9,13 @@ import Foundation
 
 struct PhotoModel: Decodable {
     let total: Int
+    let totalPages: Int
     let results: [PhotoDetail]
+    
+    enum CodingKeys: String, CodingKey {
+        case totalPages = "total_pages"
+        case total, results
+    }
 }
 
 struct PhotoDetail: Decodable {

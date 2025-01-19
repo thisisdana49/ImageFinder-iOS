@@ -14,15 +14,15 @@ class NetworkManager {
     
     private init() {}
     
-    func searchWithKeyWord(keyword: String, orderBy: String = "latest", page: Int = 1, completionHandler: @escaping (PhotoModel) -> Void) {
-        let url = "https://api.unsplash.com/search/photos?query=\(keyword)&page=1&client_id=\(accessKey)"
+    func searchWithKeyWord(keyword: String, orderBy: String = "latest", page: Int, completionHandler: @escaping (PhotoModel) -> Void) {
+        let url = "https://api.unsplash.com/search/photos?query=\(keyword)&page=\(page)&client_id=\(accessKey)"
         
         AF.request(url, method: .get)
             .validate(statusCode: 200..<300)
             .responseDecodable(of: PhotoModel.self) { response in
                 switch response.result {
                 case .success(let value):
-                    //                    dump(value.results.first?.user.name)
+                    print(#function, value.totalPages)
                     completionHandler(value)
                 case .failure(let error):
                     print(error)
@@ -38,7 +38,7 @@ class NetworkManager {
             .responseDecodable(of: PhotoStatistic.self) { response in
                 switch response.result {
                 case .success(let value):
-                    dump(value.views.total)
+                    print(id)
                     completionHandler(value)
                 case .failure(let error):
                     print(error)

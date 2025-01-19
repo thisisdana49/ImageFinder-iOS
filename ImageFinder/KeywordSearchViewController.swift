@@ -10,7 +10,14 @@ import UIKit
 class KeywordSearchViewController: UIViewController {
 
     var photos: [PhotoDetail] = []
-    var keyword: String = ""
+    var keyword: String = "" {
+        didSet { page = 1 }
+    }
+    var page: Int = 1
+    var totalPages: Int = 0
+    var isEnd: Bool {
+        return totalPages > 0 && page >= totalPages
+    }
     
     let mainView = KeywordSearchView()
     
@@ -26,9 +33,18 @@ class KeywordSearchViewController: UIViewController {
     }
     
     private func callRequest() {
-        NetworkManager.shared.searchWithKeyWord(keyword: keyword) { value in
-            self.photos = value.results
+        NetworkManager.shared.searchWithKeyWord(keyword: keyword, page: page) { value in
+            if self.page == 1 {
+                self.totalPages = value.totalPages
+                self.photos = value.results
+            } else {
+                self.photos.append(contentsOf: value.results)
+            }
             self.mainView.collectionView.reloadData()
+            
+            if self.page == 1 {
+                self.mainView.collectionView.scrollsToTop = true
+            }
         }
     }
 
@@ -65,6 +81,20 @@ extension KeywordSearchViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: UICollectionView DataSource Prefetching
+extension KeywordSearchViewController: UICollectionViewDataSourcePrefetching {
+    
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            if (photos.count - 2) == indexPath.item && !isEnd {
+                page += 1
+                callRequest()
+            }
+        }
+    }
+    
+}
+
 // MARK: UICollectionView Delegate, UICollectionView DataSource
 extension KeywordSearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -92,7 +122,7 @@ extension KeywordSearchViewController: UICollectionViewDelegate, UICollectionVie
     func configureCollectionView() {
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
-        // TODO: Prefetch delegate
+        mainView.collectionView.prefetchDataSource = self
         mainView.collectionView.register(ThumbnailCollectionView.self, forCellWithReuseIdentifier: ThumbnailCollectionView.id)
     }
 }
