@@ -14,7 +14,7 @@ class TopicSearchCollectionViewCell: UICollectionViewCell {
 
     let thumbnailImageView = UIImageView()
     let starBaseView =  UILabel()
-    let starLabel = UILabel()
+    let starLabel = BasePaddingLabel()
     let likeBaseView = UIView()
     let likeButton = UIButton()
 
@@ -35,9 +35,7 @@ class TopicSearchCollectionViewCell: UICollectionViewCell {
             thumbnailImageView.kf.setImage(with: image)
         }
         
-        starLabel.text = "★ \(item.likes)"
-//        titleLabel.text = item.title.cleanedTag()
-//        star.text = Int(item.lprice)?.formatted(.number)
+        starLabel.text = "★ \(item.likes.formatted(.number))"
     }
 
     internal func configureHierarchy() {
@@ -60,7 +58,6 @@ class TopicSearchCollectionViewCell: UICollectionViewCell {
         starLabel.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(8)
             make.leading.equalToSuperview().inset(8)
-            make.width.equalTo(100)
             make.height.equalTo(30)
         }
     }
@@ -71,6 +68,7 @@ class TopicSearchCollectionViewCell: UICollectionViewCell {
         thumbnailImageView.clipsToBounds = true
         thumbnailImageView.layer.cornerRadius = 15
         starLabel.backgroundColor = .black.withAlphaComponent(0.3)
+        starLabel.font = UIFont.systemFont(ofSize: 14)
         starLabel.textColor = .white
         starLabel.clipsToBounds = true
         starLabel.layer.cornerRadius = 15

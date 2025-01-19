@@ -38,7 +38,7 @@ class KeywordSearchView: BaseView {
     
     override func configureLayout() {
         orderButton.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide)
+            make.top.equalTo(safeAreaLayoutGuide).offset(4)
             make.trailing.equalTo(safeAreaLayoutGuide)
         }
         
@@ -69,24 +69,22 @@ class KeywordSearchView: BaseView {
     override func configureView() {
         backgroundColor = .white
         
-        scrollView.backgroundColor = .yellow
         scrollView.showsHorizontalScrollIndicator = false
         
-        stackView.backgroundColor = .systemBlue
         stackView.spacing = 10
         stackView.alignment = .center
         
         orderButton.setTitle("관련순", for: .normal)
         orderButton.setTitle("최신순", for: .selected)
         orderButton.isUserInteractionEnabled = true
-        orderButton.backgroundColor = .red
+        orderButton.backgroundColor = .darkGray
+        orderButton.layer.cornerRadius = 10
         
         configureButton()
     }
     
     func configureButton() {
         colorButtons.forEach { button in
-            button.backgroundColor = .orange
             stackView.addArrangedSubview(button)
         }
     }

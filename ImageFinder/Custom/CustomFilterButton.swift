@@ -16,11 +16,12 @@ class CustomFilterButton: UIButton {
         super.init(frame: .zero)
         self.name = name
         
-        var config = UIButton.Configuration.plain()
+        var config = UIButton.Configuration.borderless()
         config.contentInsets = NSDirectionalEdgeInsets.init(top: 5, leading: 10, bottom: 5, trailing: 10)
+        config.automaticallyUpdateForSelection = false
         
         self.setTitle(title, for: .normal)
-        self.setTitleColor(self.isSelected ? .black : .white, for: .normal)
+        self.setTitleColor(self.isSelected ? .white : .black, for: .normal)
         self.layer.backgroundColor = UIColor.systemGray6.cgColor
         self.layer.cornerRadius = 15
         self.tag = tag
@@ -29,7 +30,7 @@ class CustomFilterButton: UIButton {
     
     override var isSelected: Bool {
         didSet {
-            backgroundColor = isSelected ? .systemBlue : .orange
+            backgroundColor = isSelected ? .systemGray3 : .systemGray6
         }
     }
     

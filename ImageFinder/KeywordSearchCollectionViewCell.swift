@@ -14,7 +14,7 @@ class KeywordSearchCollectionViewCell: UICollectionViewCell {
 
     let thumbnailImageView = UIImageView()
     let starBaseView =  UILabel()
-    let starLabel = UILabel()
+    let starLabel = BasePaddingLabel()
     let likeBaseView = UIView()
     let likeButton = UIButton()
 
@@ -35,15 +35,12 @@ class KeywordSearchCollectionViewCell: UICollectionViewCell {
             thumbnailImageView.kf.setImage(with: image)
         }
         
-        starLabel.text = "★ \(item.likes)"
-//        titleLabel.text = item.title.cleanedTag()
-//        star.text = Int(item.lprice)?.formatted(.number)
+        starLabel.text = "★ \(item.likes.formatted(.number))"
     }
 
     internal func configureHierarchy() {
         contentView.addSubview(thumbnailImageView)
         contentView.addSubview(starBaseView)
-//        likeBaseView.addSubview(likeButton)
         contentView.addSubview(starLabel)
     }
     
@@ -60,7 +57,6 @@ class KeywordSearchCollectionViewCell: UICollectionViewCell {
         starLabel.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(8)
             make.leading.equalToSuperview().inset(8)
-            make.width.equalTo(100)
             make.height.equalTo(30)
         }
     }
@@ -70,6 +66,7 @@ class KeywordSearchCollectionViewCell: UICollectionViewCell {
         // MARK: 왜 해줘야 하지?
         thumbnailImageView.clipsToBounds = true
         starLabel.backgroundColor = .black.withAlphaComponent(0.3)
+        starLabel.font = UIFont.systemFont(ofSize: 14)
         starLabel.textColor = .white
         starLabel.clipsToBounds = true
         starLabel.layer.cornerRadius = 15
