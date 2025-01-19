@@ -14,10 +14,14 @@ class NetworkManager {
     
     private init() {}
     
-    func searchWithKeyWord(keyword: String, page: Int, orderBy: String, color: String = "blue", completionHandler: @escaping (PhotoModel) -> Void) {
-        let url = "https://api.unsplash.com/search/photos?query=\(keyword)&page=\(page)&order_by=\(orderBy)&color=\(color)&client_id=\(accessKey)"
+    func searchWithKeyWord(keyword: String, page: Int, orderBy: String, filteredBy color: String? = nil, completionHandler: @escaping (PhotoModel) -> Void) {
+        let url = "https://api.unsplash.com/search/photos?query=\(keyword)&page=\(page)&order_by=\(orderBy)&client_id=\(accessKey)"
+        var params: Parameters = [:]
+        if let color = color, !color.isEmpty {
+            params["color"] = color
+        }
         
-        AF.request(url, method: .get)
+        AF.request(url, method: .get, parameters: params)
             .validate(statusCode: 200..<300)
             .responseDecodable(of: PhotoModel.self) { response in
                 switch response.result {

@@ -15,11 +15,15 @@ class KeywordSearchView: BaseView {
     
     let orderButton = UIButton()
     
-    let customButton1 = CustomFilterButton(title: "블랙", tag: 0)
-    let customButton2 = CustomFilterButton(title: "블랙", tag: 0)
-    let customButton3 = CustomFilterButton(title: "블랙", tag: 0)
-    let customButton4 = CustomFilterButton(title: "블랙", tag: 0)
-    let customButton5 = CustomFilterButton(title: "블랙", tag: 0)
+    let buttonBlack = CustomFilterButton(title: "블랙", name: "black", tag: 0)
+    let buttonWhite = CustomFilterButton(title: "화이트", name: "white", tag: 0)
+    let buttonYellow = CustomFilterButton(title: "옐로우", name: "yellow", tag: 0)
+    let buttonRed = CustomFilterButton(title: "레드", name: "red", tag: 0)
+    let buttonPurple = CustomFilterButton(title: "퍼플", name: "purple", tag: 0)
+    let buttonGreen = CustomFilterButton(title: "그린", name: "green", tag: 0)
+    let buttonBlue = CustomFilterButton(title: "블루", name: "blue", tag: 0)
+    
+    lazy var colorButtons = [buttonBlack, buttonWhite, buttonYellow, buttonRed, buttonPurple, buttonGreen, buttonBlue]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,12 +44,19 @@ class KeywordSearchView: BaseView {
         
         scrollView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(safeAreaLayoutGuide)
-            make.height.equalTo(55)
+            make.height.equalTo(48)
         }
         
         stackView.snp.makeConstraints { make in
-            make.edges.equalTo(scrollView)
-            make.height.equalTo(55)
+            make.verticalEdges.equalTo(scrollView)
+            make.horizontalEdges.equalTo(scrollView).inset(8)
+            make.height.equalTo(48)
+        }
+        
+        colorButtons.forEach { button in
+            button.snp.makeConstraints { make in
+                make.verticalEdges.equalTo(scrollView).inset(8)
+            }
         }
         
         collectionView.snp.makeConstraints { make in
@@ -58,8 +69,12 @@ class KeywordSearchView: BaseView {
     override func configureView() {
         backgroundColor = .white
         
+        scrollView.backgroundColor = .yellow
+        scrollView.showsHorizontalScrollIndicator = false
+        
         stackView.backgroundColor = .systemBlue
         stackView.spacing = 10
+        stackView.alignment = .center
         
         orderButton.setTitle("관련순", for: .normal)
         orderButton.setTitle("최신순", for: .selected)
@@ -70,27 +85,12 @@ class KeywordSearchView: BaseView {
     }
     
     func configureButton() {
-        let label = customButton1
-        label.backgroundColor = .orange
-        stackView.addArrangedSubview(label)
-        
-        let label2 = customButton2
-        label2.backgroundColor = .brown
-        stackView.addArrangedSubview(label2)
-        
-        let label3 = customButton3
-        label3.backgroundColor = .orange
-        stackView.addArrangedSubview(label3)
-        
-        let label4 = customButton4
-        label4.backgroundColor = .orange
-        stackView.addArrangedSubview(label4)
-        
-        let label5 = customButton5
-        label5.backgroundColor = .orange
-        stackView.addArrangedSubview(label5)
+        colorButtons.forEach { button in
+            button.backgroundColor = .orange
+            stackView.addArrangedSubview(button)
+        }
     }
-    
+
     
     internal func createCollectionViewLayout() -> UICollectionViewFlowLayout {
         let spacing: CGFloat = 5

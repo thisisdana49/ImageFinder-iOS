@@ -13,7 +13,8 @@ class KeywordSearchViewController: UIViewController {
     var keyword: String = "" {
         didSet { page = 1 }
     }
-    var orderBy : String = "relevant"
+    var orderBy: String = "relevant"
+    var filteredBy: String?
     
     var page: Int = 1
     var totalPages: Int = 0
@@ -31,13 +32,16 @@ class KeywordSearchViewController: UIViewController {
         super.viewDidLoad()
         
         mainView.orderButton.addTarget(self, action: #selector(orderButtonTapped), for: .touchUpInside)
+        mainView.colorButtons.forEach { button in
+            button.addTarget(self, action: #selector(colorButtonTapped), for: .touchUpInside)
+        }
         
         configureNavController()
         configureCollectionView()
     }
     
     private func callRequest() {
-        NetworkManager.shared.searchWithKeyWord(keyword: keyword, page: page, orderBy: orderBy) { value in
+        NetworkManager.shared.searchWithKeyWord(keyword: keyword, page: page, orderBy: orderBy, filteredBy: filteredBy) { value in
             if self.page == 1 {
                 print(#function, self.orderBy)
                 self.totalPages = value.totalPages
@@ -58,6 +62,25 @@ class KeywordSearchViewController: UIViewController {
         sender.isSelected.toggle()
         orderBy = sender.isSelected ? "latest" : "relevant"
         print(#function, sender.isSelected, orderBy)
+        callRequest()
+    }
+    
+    @objc
+    func colorButtonTapped(_ sender: CustomFilterButton) {
+        sender.isSelected.toggle()
+        mainView.colorButtons.forEach { button in
+            if sender != button {
+                button.isSelected = false
+            }
+        }
+        
+        if let selectedButton = mainView.colorButtons.first(where: { $0.isSelected }) {
+            filteredBy = selectedButton.name
+        } else {
+            filteredBy = nil
+        }
+        
+        filteredBy = sender.name
         callRequest()
     }
     
