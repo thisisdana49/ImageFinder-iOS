@@ -9,26 +9,42 @@ import UIKit
 
 class TopicSearchView: BaseView {
     
-    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
+    lazy var collectionView1 = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
+    lazy var collectionView2 = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
+    lazy var collectionView3 = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
     override func configureHierarchy() {
-        addSubview(collectionView)
+        addSubview(collectionView1)
+        addSubview(collectionView2)
+        addSubview(collectionView3)
     }
     
     override func configureLayout() {
-        collectionView.snp.makeConstraints { make in
+        collectionView1.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(safeAreaLayoutGuide)
+            make.height.equalTo(240)
+        }
+        collectionView2.snp.makeConstraints { make in
+            make.top.equalTo(collectionView1.snp.bottom)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide)
+            make.height.equalTo(240)
+        }
+        collectionView3.snp.makeConstraints { make in
+            make.top.equalTo(collectionView2.snp.bottom)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide)
             make.height.equalTo(240)
         }
     }
     
     override func configureView() {
         backgroundColor = .white
-        collectionView.backgroundColor = .systemGray
+        collectionView1.backgroundColor = .systemGray
+        collectionView2.backgroundColor = .systemGray
+        collectionView3.backgroundColor = .systemGray
     }
     
     internal func createCollectionViewLayout() -> UICollectionViewFlowLayout {

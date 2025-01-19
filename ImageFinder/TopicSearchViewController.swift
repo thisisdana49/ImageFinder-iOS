@@ -7,9 +7,16 @@
 
 import UIKit
 
+struct Section {
+    let topic: String
+    let photos: [PhotoDetail]
+}
+
 class TopicSearchViewController: UIViewController {
     
     let keywords: [String] = ["golden-hour", "business-work", "architecture-interior"]
+    
+    var sections: [Section] = []
     
     var photosOne: [PhotoDetail] = []
     var photosTwo: [PhotoDetail] = []
@@ -65,7 +72,9 @@ class TopicSearchViewController: UIViewController {
             self.photosTwo = fetchedPhotosTwo
             self.photosThree = fetchedPhotosThree
             
-            self.mainView.collectionView.reloadData()
+            self.mainView.collectionView1.reloadData()
+            self.mainView.collectionView2.reloadData()
+            self.mainView.collectionView3.reloadData()
         }
     }
 
@@ -74,22 +83,48 @@ class TopicSearchViewController: UIViewController {
 // MARK: UICollectionView Delegate, UICollectionView DataSource
 extension TopicSearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photosOne.count
+        if collectionView == mainView.collectionView1 {
+            return photosOne.count
+        } else if collectionView == mainView.collectionView2 {
+            return photosTwo.count            
+        } else {
+            return photosThree.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ThumbnailCollectionView.id, for: indexPath) as? ThumbnailCollectionView else { return UICollectionViewCell() }
-        let photo = photosOne[indexPath.row]
         
-        cell.configureData(item: photo)
-        
+        switch collectionView {
+        case mainView.collectionView1 :
+            let photo = photosOne[indexPath.row]
+            cell.configureData(item: photo)
+        case mainView.collectionView2 :
+            let photo = photosTwo[indexPath.row]
+            cell.configureData(item: photo)
+        case mainView.collectionView3 :
+            let photo = photosThree[indexPath.row]
+            cell.configureData(item: photo)
+        default:
+            let photo = photosOne[indexPath.row]
+            cell.configureData(item: photo)
+        }
+                
         return cell
     }
     
+    // TODO: Prefetch delegate
     func configureCollectionView() {
-        mainView.collectionView.delegate = self
-        mainView.collectionView.dataSource = self
-        // TODO: Prefetch delegate
-        mainView.collectionView.register(ThumbnailCollectionView.self, forCellWithReuseIdentifier: ThumbnailCollectionView.id)
+        mainView.collectionView1.delegate = self
+        mainView.collectionView1.dataSource = self
+        mainView.collectionView1.register(ThumbnailCollectionView.self, forCellWithReuseIdentifier: ThumbnailCollectionView.id)
+        
+        mainView.collectionView2.delegate = self
+        mainView.collectionView2.dataSource = self
+        mainView.collectionView2.register(ThumbnailCollectionView.self, forCellWithReuseIdentifier: ThumbnailCollectionView.id)
+        
+        mainView.collectionView3.delegate = self
+        mainView.collectionView3.dataSource = self
+        mainView.collectionView3.register(ThumbnailCollectionView.self, forCellWithReuseIdentifier: ThumbnailCollectionView.id)
     }
 }
