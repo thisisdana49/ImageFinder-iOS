@@ -73,7 +73,7 @@ extension KeywordSearchViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KeywordSearchCollectionViewCell.id, for: indexPath) as? KeywordSearchCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ThumbnailCollectionView.id, for: indexPath) as? ThumbnailCollectionView else { return UICollectionViewCell() }
         let photo = photos[indexPath.row]
         
         cell.configureData(item: photo)
@@ -93,6 +93,6 @@ extension KeywordSearchViewController: UICollectionViewDelegate, UICollectionVie
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
         // TODO: Prefetch delegate
-        mainView.collectionView.register(KeywordSearchCollectionViewCell.self, forCellWithReuseIdentifier: KeywordSearchCollectionViewCell.id)
+        mainView.collectionView.register(ThumbnailCollectionView.self, forCellWithReuseIdentifier: ThumbnailCollectionView.id)
     }
 }

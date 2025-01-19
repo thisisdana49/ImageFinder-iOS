@@ -8,9 +8,9 @@
 import UIKit
 import Kingfisher
 
-class KeywordSearchCollectionViewCell: UICollectionViewCell {
+class ThumbnailCollectionView: UICollectionViewCell {
     
-    static let id = "KeywordSearchCollectionViewCell"
+    static let id = "ThumbnailCollectionView"
 
     let thumbnailImageView = UIImageView()
     let starBaseView =  UILabel()
@@ -70,7 +70,7 @@ class KeywordSearchCollectionViewCell: UICollectionViewCell {
         // MARK: 왜 해줘야 하지?
         thumbnailImageView.clipsToBounds = true
         starLabel.backgroundColor = .black.withAlphaComponent(0.3)
-        
+        starLabel.textColor = .white
         starLabel.clipsToBounds = true
         starLabel.layer.cornerRadius = 15
     }

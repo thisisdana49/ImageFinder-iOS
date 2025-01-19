@@ -36,11 +36,39 @@ class TopicSearchViewController: UIViewController {
     }
     
     private func callRequest() {
+        let dispatchGroup = DispatchGroup()
+        
+        var fetchedPhotosOne: [PhotoDetail] = []
+        var fetchedPhotosTwo: [PhotoDetail] = []
+        var fetchedPhotosThree: [PhotoDetail] = []
+        
+        dispatchGroup.enter()
         NetworkManager.shared.searchWithTopic(topic: keywords[0]) { value in
-            self.photosOne = value
+            fetchedPhotosOne = value
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.enter()
+        NetworkManager.shared.searchWithTopic(topic: keywords[1]) { value in
+            fetchedPhotosTwo = value
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.enter()
+        NetworkManager.shared.searchWithTopic(topic: keywords[2]) { value in
+            fetchedPhotosThree = value
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            self.photosOne = fetchedPhotosOne
+            self.photosTwo = fetchedPhotosTwo
+            self.photosThree = fetchedPhotosThree
+            
             self.mainView.collectionView.reloadData()
         }
     }
+
 }
 
 // MARK: UICollectionView Delegate, UICollectionView DataSource
@@ -50,7 +78,10 @@ extension TopicSearchViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KeywordSearchCollectionViewCell.id, for: indexPath) as? KeywordSearchCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ThumbnailCollectionView.id, for: indexPath) as? ThumbnailCollectionView else { return UICollectionViewCell() }
+        let photo = photosOne[indexPath.row]
+        
+        cell.configureData(item: photo)
         
         return cell
     }
@@ -59,6 +90,6 @@ extension TopicSearchViewController: UICollectionViewDelegate, UICollectionViewD
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
         // TODO: Prefetch delegate
-        mainView.collectionView.register(KeywordSearchCollectionViewCell.self, forCellWithReuseIdentifier: KeywordSearchCollectionViewCell.id)
+        mainView.collectionView.register(ThumbnailCollectionView.self, forCellWithReuseIdentifier: ThumbnailCollectionView.id)
     }
 }
