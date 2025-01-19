@@ -24,6 +24,7 @@ class KeywordSearchViewController: UIViewController {
     var isEnd: Bool {
         return totalPages > 0 && page >= totalPages
     }
+    var isNoData: Bool = false
     
     let mainView = KeywordSearchView()
     
@@ -46,8 +47,10 @@ class KeywordSearchViewController: UIViewController {
     private func callRequest() {
         NetworkManager.shared.searchWithKeyWord(keyword: keyword, page: page, orderBy: orderBy, filteredBy: filteredBy) { value in
             if self.page == 1 {
-                print(#function, self.orderBy)
+                if value.total == 0 { self.isNoData = true }
+                else { self.isNoData = false }
                 self.totalPages = value.totalPages
+                
                 self.photos = value.results
             } else {
                 self.photos.append(contentsOf: value.results)
@@ -138,6 +141,13 @@ extension KeywordSearchViewController: UICollectionViewDataSourcePrefetching {
 extension KeywordSearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if photos.count == 0 && !isNoData {
+            collectionView.setEmptyMessage("사진을 검색해보세요.")
+        } else if photos.count == 0 && isNoData {
+            collectionView.setEmptyMessage("검색 결과가 없어요😔")
+        } else {
+            collectionView.restore()
+        }
         return photos.count
     }
     
