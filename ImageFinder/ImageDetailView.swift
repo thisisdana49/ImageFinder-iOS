@@ -17,9 +17,9 @@ class ImageDetailView: BaseView {
     let imageView = UIImageView()
     
     let informHeaderLabel = UILabel()
-    let informSizeLabel = UILabel()
-    let informViewLabel = UILabel()
-    let informDownloadLabel = UILabel()
+    let informSizeView = ImageDetailInformView()
+    let informViewsView = ImageDetailInformView()
+    let informDownloadsView = ImageDetailInformView()
     let chartHeaderLabel = UILabel()
     
     override init(frame: CGRect) {
@@ -50,15 +50,15 @@ class ImageDetailView: BaseView {
         contentView.addSubview(informView)
         contentView.addSubview(imageView)
 
-        topView.backgroundColor = .systemOrange
+//        topView.backgroundColor = .systemOrange
         informView.backgroundColor = .white
         imageView.backgroundColor = .black
         imageView.contentMode = .scaleAspectFit
         
         informView.addSubview(informHeaderLabel)
-        informView.addSubview(informSizeLabel)
-        informView.addSubview(informViewLabel)
-        informView.addSubview(informDownloadLabel)
+        informView.addSubview(informSizeView)
+        informView.addSubview(informViewsView)
+        informView.addSubview(informDownloadsView)
         informView.addSubview(chartHeaderLabel)
 
         topView.snp.makeConstraints { make in
@@ -77,19 +77,25 @@ class ImageDetailView: BaseView {
             make.size.equalTo(100)
         }
         
-        informSizeLabel.snp.makeConstraints { make in
+        informSizeView.snp.makeConstraints { make in
             make.top.equalTo(informView).offset(20)
-            make.leading.equalTo(informHeaderLabel.snp.trailing)
+            make.leading.equalTo(informHeaderLabel.snp.trailing).offset(8)
+            make.trailing.equalTo(informView).inset(16)
+            make.height.equalTo(informHeaderLabel).multipliedBy(0.33)
         }
         
-        informViewLabel.snp.makeConstraints { make in
-            make.top.equalTo(informSizeLabel.snp.bottom)
-            make.leading.equalTo(informHeaderLabel.snp.trailing)
+        informViewsView.snp.makeConstraints { make in
+            make.top.equalTo(informSizeView.snp.bottom)
+            make.leading.equalTo(informHeaderLabel.snp.trailing).offset(8)
+            make.trailing.equalTo(informView).inset(16)
+            make.height.equalTo(informHeaderLabel).multipliedBy(0.33)
         }
         
-        informDownloadLabel.snp.makeConstraints { make in
-            make.top.equalTo(informViewLabel.snp.bottom)
-            make.leading.equalTo(informHeaderLabel.snp.trailing)
+        informDownloadsView.snp.makeConstraints { make in
+            make.top.equalTo(informViewsView.snp.bottom)
+            make.leading.equalTo(informHeaderLabel.snp.trailing).offset(8)
+            make.trailing.equalTo(informView).inset(16)
+            make.height.equalTo(informHeaderLabel).multipliedBy(0.33)
         }
         
         chartHeaderLabel.snp.makeConstraints { make in
@@ -138,19 +144,16 @@ class ImageDetailView: BaseView {
         
         informHeaderLabel.text = "정보"
         informHeaderLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        informHeaderLabel.backgroundColor = .systemBlue
+//        informHeaderLabel.backgroundColor = .systemBlue
         
-        informSizeLabel.text = "크기 \(photo.size)"
-        informSizeLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        informSizeLabel.backgroundColor = .systemRed
+        informSizeView.titleLabel.text = "크기"
+        informSizeView.contentLabel.text = "\(photo.size)"
         
-        informViewLabel.text = "조회수 \(photoStatistics?.views.total ?? 0)"
-        informViewLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        informViewLabel.backgroundColor = .systemRed
+        informViewsView.titleLabel.text = "조회수"
+        informViewsView.contentLabel.text = "\(photoStatistics?.views.total ?? 0)"
         
-        informDownloadLabel.text = "다운로드 \(photoStatistics?.downloads.total ?? 0)"
-        informDownloadLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        informDownloadLabel.backgroundColor = .systemRed
+        informDownloadsView.titleLabel.text = "다운로드"
+        informDownloadsView.contentLabel.text = "\(photoStatistics?.downloads.total ?? 0)"
         
         chartHeaderLabel.text = "차트"
         chartHeaderLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)

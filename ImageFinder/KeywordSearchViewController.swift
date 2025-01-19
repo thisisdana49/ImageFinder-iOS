@@ -164,7 +164,7 @@ extension KeywordSearchViewController: UICollectionViewDelegate, UICollectionVie
         let vc = ImageDetailViewController()
         vc.photo = photos[indexPath.row]
         
-        self.navigationController?.pushViewController(vc, animated: true)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func configureCollectionView() {

@@ -119,7 +119,7 @@ extension TopicSearchViewController: UICollectionViewDelegate, UICollectionViewD
             vc.photo = photosOne[indexPath.row]
         }
         
-        self.navigationController?.pushViewController(vc, animated: true)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     // TODO: Prefetch delegate
