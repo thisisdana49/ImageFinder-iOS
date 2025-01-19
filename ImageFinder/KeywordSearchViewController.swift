@@ -161,7 +161,6 @@ extension KeywordSearchViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(#function)
         let vc = ImageDetailViewController()
         vc.photo = photos[indexPath.row]
         

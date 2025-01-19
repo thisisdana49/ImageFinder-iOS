@@ -106,6 +106,22 @@ extension TopicSearchViewController: UICollectionViewDelegate, UICollectionViewD
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = ImageDetailViewController()
+        switch collectionView {
+        case mainView.collectionView1 :
+            vc.photo = photosOne[indexPath.row]
+        case mainView.collectionView2 :
+            vc.photo = photosTwo[indexPath.row]
+        case mainView.collectionView3 :
+            vc.photo = photosThree[indexPath.row]
+        default:
+            vc.photo = photosOne[indexPath.row]
+        }
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     // TODO: Prefetch delegate
     func configureCollectionView() {
         mainView.collectionView1.delegate = self
