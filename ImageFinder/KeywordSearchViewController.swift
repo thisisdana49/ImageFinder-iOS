@@ -11,10 +11,13 @@ class KeywordSearchViewController: UIViewController {
 
     var photos: [PhotoDetail] = []
     var keyword: String = "" {
-        didSet { page = 1 }
+        didSet {
+            page = 1
+            filteredBy = nil
+        }
     }
     var orderBy: String = "relevant"
-    var filteredBy: String?
+    var filteredBy: String? = nil
     
     var page: Int = 1
     var totalPages: Int = 0

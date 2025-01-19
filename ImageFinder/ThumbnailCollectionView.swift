@@ -31,7 +31,7 @@ class ThumbnailCollectionView: UICollectionViewCell {
     }
     
     func configureData(item: PhotoDetail) {
-        if let image = URL(string: item.urls.raw) {
+        if let image = URL(string: item.urls.small) {
             thumbnailImageView.kf.setImage(with: image)
         }
         
