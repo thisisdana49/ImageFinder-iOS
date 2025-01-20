@@ -62,9 +62,8 @@ class KeywordSearchCollectionViewCell: UICollectionViewCell {
     }
     
     internal func configureView() {
+        clipsToBounds = true
         thumbnailImageView.contentMode = .scaleAspectFill
-        // MARK: 왜 해줘야 하지?
-        thumbnailImageView.clipsToBounds = true
         starLabel.backgroundColor = .black.withAlphaComponent(0.3)
         starLabel.font = UIFont.systemFont(ofSize: 14)
         starLabel.textColor = .white

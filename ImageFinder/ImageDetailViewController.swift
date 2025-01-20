@@ -23,6 +23,7 @@ class ImageDetailViewController: UIViewController {
         
         // TODO: 위치에 대한 고민, UI와 관련해서 서비스
         callRequest()
+        navigationItem.largeTitleDisplayMode = .never
     }
     
     private func callRequest() {
