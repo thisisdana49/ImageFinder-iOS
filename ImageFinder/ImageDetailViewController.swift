@@ -20,10 +20,16 @@ class ImageDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNavController()
         
         // TODO: 위치에 대한 고민, UI와 관련해서 서비스
         callRequest()
+    }
+    
+    func configureNavController() {
         navigationItem.largeTitleDisplayMode = .never
+        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.topItem?.title = ""
     }
     
     private func callRequest() {

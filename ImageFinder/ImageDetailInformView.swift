@@ -20,7 +20,7 @@ class ImageDetailInformView: UIView {
         
         titleLabel.textColor = .black
         
-        titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
         contentLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         
         titleLabel.snp.makeConstraints { make in
