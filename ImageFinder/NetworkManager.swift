@@ -42,7 +42,6 @@ enum PhotoRequest {
             return [:]
         case .withKeyword(let keyword, let page, let orderBy, let filterBy):
             if let color = filterBy, !color.isEmpty {
-                print(color)
                 return [
                     "query": keyword,
                     "page": page,

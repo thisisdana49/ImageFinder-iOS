@@ -13,11 +13,11 @@ class KeywordSearchViewController: UIViewController {
     var keyword: String = "" {
         didSet {
             page = 1
-            filteredBy = nil
+            filterBy = nil
         }
     }
     var orderBy: String = "relevant"
-    var filteredBy: String? = nil
+    var filterBy: String? = nil
     
     var page: Int = 1
     var totalPages: Int = 0
@@ -45,7 +45,8 @@ class KeywordSearchViewController: UIViewController {
     }
     
     private func callRequest() {
-        NetworkManager.shared.searchWithKeyWord(api: .withKeyword(keyword: keyword, page: page, orderBy: orderBy, filterBy: filteredBy)) { value in
+        NetworkManager.shared.searchWithKeyWord(api: .withKeyword(keyword: keyword, page: page, orderBy: orderBy, filterBy: filterBy)) { value in
+            print(#function, "color", filterBy)
             if self.page == 1 {
                 if value.total == 0 { self.isNoData = true }
                 else { self.isNoData = false }
@@ -67,7 +68,6 @@ class KeywordSearchViewController: UIViewController {
     func orderButtonTapped(_ sender: UIButton) {
         sender.isSelected.toggle()
         orderBy = sender.isSelected ? "latest" : "relevant"
-        print(#function, sender.isSelected, orderBy)
         callRequest()
     }
     
@@ -81,12 +81,11 @@ class KeywordSearchViewController: UIViewController {
         }
         
         if let selectedButton = mainView.colorButtons.first(where: { $0.isSelected }) {
-            filteredBy = selectedButton.name
+            filterBy = selectedButton.name
         } else {
-            filteredBy = nil
+            filterBy = nil
         }
-        
-        filteredBy = sender.name
+
         callRequest()
     }
     
