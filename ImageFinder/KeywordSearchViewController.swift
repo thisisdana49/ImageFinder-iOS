@@ -45,7 +45,7 @@ class KeywordSearchViewController: UIViewController {
     }
     
     private func callRequest() {
-        NetworkManager.shared.searchWithKeyWord(keyword: keyword, page: page, orderBy: orderBy, filteredBy: filteredBy) { value in
+        NetworkManager.shared.searchWithKeyWord(api: .withKeyword(keyword: keyword, page: page, orderBy: orderBy, filterBy: filteredBy)) { value in
             if self.page == 1 {
                 if value.total == 0 { self.isNoData = true }
                 else { self.isNoData = false }

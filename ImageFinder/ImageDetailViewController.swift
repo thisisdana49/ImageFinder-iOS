@@ -34,7 +34,7 @@ class ImageDetailViewController: UIViewController {
     
     private func callRequest() {
         guard let photoID = photo?.id else { return }
-        NetworkManager.shared.searchWithPhotoID(id: photoID) { value in
+        NetworkManager.shared.searchWithPhotoID(api: .withID(id: photoID)) { value in
             self.photoStatistics = value
             self.mainView.configureData(photo: self.photo, photoStatistics: self.photoStatistics)
         }

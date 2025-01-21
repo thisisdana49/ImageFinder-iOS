@@ -110,7 +110,7 @@ class ImageDetailView: BaseView {
     }
 
     func configureData(photo: PhotoDetail?, photoStatistics: PhotoStatistic?) {
-        guard let photo = photo, let imageURL = URL(string: photo.urls.raw), let photoStatistics = photoStatistics else { return }
+        guard let photo = photo, let imageURL = URL(string: photo.urls.full), let photoStatistics = photoStatistics else { return }
 
         imageView.kf.setImage(with: imageURL) { [weak self] result in
             guard let self = self else { return }

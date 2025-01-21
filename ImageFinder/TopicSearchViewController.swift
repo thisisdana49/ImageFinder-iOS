@@ -43,19 +43,19 @@ class TopicSearchViewController: UIViewController {
         var fetchedPhotosThree: [PhotoDetail] = []
         
         dispatchGroup.enter()
-        NetworkManager.shared.searchWithTopic(topic: keywords[0]) { value in
+        NetworkManager.shared.searchWithTopic(api: PhotoRequest.withTopic(topic: keywords[0])) { value in
             fetchedPhotosOne = value
             dispatchGroup.leave()
         }
         
         dispatchGroup.enter()
-        NetworkManager.shared.searchWithTopic(topic: keywords[1]) { value in
+        NetworkManager.shared.searchWithTopic(api: PhotoRequest.withTopic(topic: keywords[1])) { value in
             fetchedPhotosTwo = value
             dispatchGroup.leave()
         }
         
         dispatchGroup.enter()
-        NetworkManager.shared.searchWithTopic(topic: keywords[2]) { value in
+        NetworkManager.shared.searchWithTopic(api: PhotoRequest.withTopic(topic: keywords[2])) { value in
             fetchedPhotosThree = value
             dispatchGroup.leave()
         }

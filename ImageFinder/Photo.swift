@@ -52,6 +52,7 @@ struct PhotoDownloads: Decodable {
 
 struct PhotoURLs: Decodable {
     let raw: String
+    let full: String
     let small: String
     let thumb: String
 }

@@ -8,25 +8,72 @@
 import Foundation
 import Alamofire
 
+enum PhotoRequest {
+    case withID(id: String)
+    case withKeyword(keyword: String, page: Int, orderBy: String, filterBy: String?)
+    case withTopic(topic: String)
+    
+    var baseURL: String {
+        return "https://api.unsplash.com"
+    }
+    
+    var endPoint: URL {
+        switch self {
+        case .withID(let id):
+            return URL(string: baseURL + "/photos/\(id)/statistics")!
+        case .withKeyword:
+            return URL(string: baseURL + "/search/photos")!
+        case .withTopic(let topic):
+            return URL(string: baseURL + "/topics/\(topic)/photos")!
+        }
+    }
+    
+    var header: HTTPHeaders {
+        return ["Authorization": "Client-ID \(Key.access)"]
+    }
+    
+    var method: HTTPMethod {
+        return .get
+    }
+    
+    var parameter: Parameters {
+        switch self {
+        case .withID:
+            return [:]
+        case .withKeyword(let keyword, let page, let orderBy, let filterBy):
+            if let color = filterBy, !color.isEmpty {
+                print(color)
+                return [
+                    "query": keyword,
+                    "page": page,
+                    "order_by": orderBy,
+                    "color": color
+                ]
+            } else {
+                return [
+                    "query": keyword,
+                    "page": page,
+                    "order_by": orderBy,
+                ]
+            }
+        case .withTopic:
+            return [:]
+        }
+    }
+}
+
 class NetworkManager {
     
     static let shared = NetworkManager()
     
     private init() {}
     
-    func searchWithKeyWord(keyword: String, page: Int, orderBy: String, filteredBy color: String? = nil, completionHandler: @escaping (PhotoModel) -> Void) {
-        let url = "https://api.unsplash.com/search/photos?query=\(keyword)&page=\(page)&order_by=\(orderBy)&client_id=\(accessKey)"
-        var params: Parameters = [:]
-        if let color = color, !color.isEmpty {
-            params["color"] = color
-        }
-        
-        AF.request(url, method: .get, parameters: params)
+    func searchWithKeyWord(api: PhotoRequest, completionHandler: @escaping (PhotoModel) -> Void) {
+        AF.request(api.endPoint, method: api.method, parameters: api.parameter, headers: api.header)
             .validate(statusCode: 200..<300)
             .responseDecodable(of: PhotoModel.self) { response in
                 switch response.result {
                 case .success(let value):
-                    print(#function, value.totalPages)
                     completionHandler(value)
                 case .failure(let error):
                     print(error)
@@ -34,15 +81,12 @@ class NetworkManager {
             }
     }
     
-    func searchWithPhotoID(id: String, completionHandler: @escaping (PhotoStatistic) -> Void) {
-        let url = "https://api.unsplash.com/photos/\(id)/statistics?client_id=\(accessKey)"
-        
-        AF.request(url, method: .get)
+    func searchWithPhotoID(api: PhotoRequest, completionHandler: @escaping (PhotoStatistic) -> Void) {
+        AF.request(api.endPoint, method: api.method, headers: api.header)
             .validate(statusCode: 200..<300)
             .responseDecodable(of: PhotoStatistic.self) { response in
                 switch response.result {
                 case .success(let value):
-                    print(id)
                     completionHandler(value)
                 case .failure(let error):
                     print(error)
@@ -50,15 +94,12 @@ class NetworkManager {
             }
     }
     
-    func searchWithTopic(topic: String, completionHandler: @escaping ([PhotoDetail]) -> Void) {
-        let url = "https://api.unsplash.com/topics/\(topic)/photos?page=1&client_id=\(accessKey)"
-        
-        AF.request(url, method: .get)
+    func searchWithTopic(api: PhotoRequest, completionHandler: @escaping ([PhotoDetail]) -> Void) {
+        AF.request(api.endPoint, method: api.method, headers: api.header)
             .validate(statusCode: 200..<300)
             .responseDecodable(of: [PhotoDetail].self) { response in
                 switch response.result {
                 case .success(let value):
-                    dump(value.first?.id)
                     completionHandler(value)
                 case .failure(let error):
                     print(error)
