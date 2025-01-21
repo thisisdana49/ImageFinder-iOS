@@ -46,7 +46,7 @@ class KeywordSearchViewController: UIViewController {
     
     private func callRequest() {
         NetworkManager.shared.searchWithKeyWord(api: .withKeyword(keyword: keyword, page: page, orderBy: orderBy, filterBy: filterBy)) { value in
-            print(#function, "color", filterBy)
+            print(#function, "color", self.filterBy)
             if self.page == 1 {
                 if value.total == 0 { self.isNoData = true }
                 else { self.isNoData = false }
@@ -91,25 +91,18 @@ class KeywordSearchViewController: UIViewController {
     
     func configureNavController() {
         let searchController = UISearchController()
-        let searchBar = searchController.searchBar
-        searchBar.delegate = self
+        let customSearchBar = CustomSearchBar()
+        customSearchBar.delegate = self
         
-        if let textField = searchBar.value(forKey: "searchField") as? UITextField, let leftView = textField.leftView as? UIImageView {
-            textField.backgroundColor = .systemGray6
-            textField.textColor = .blue
-            textField.attributedPlaceholder = NSAttributedString(
-                string: "키워드 검색",
-                attributes: [.foregroundColor: UIColor.systemGray]
-            )
-            
-            leftView.image = leftView.image?.withRenderingMode(.alwaysTemplate)
-            leftView.tintColor = .systemGray
-        }
+        searchController.automaticallyShowsCancelButton = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        
+        searchController.searchBar.removeFromSuperview()
+        searchController.setValue(customSearchBar, forKey: "searchBar")
+
         self.navigationItem.searchController = searchController
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         self.navigationItem.title = "IMAGE FINDER"
-        
-        self.navigationController?.navigationBar.tintColor = .white
     }
 }
 
