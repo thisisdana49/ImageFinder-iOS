@@ -28,7 +28,6 @@ final class ImageDetailViewController: UIViewController {
     
     private func configureNavController() {
         navigationItem.largeTitleDisplayMode = .never
-        navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.topItem?.title = ""
     }
     
