@@ -54,8 +54,7 @@ class KeywordSearchViewController: UIViewController {
     }
     
     private func callRequest() {
-        NetworkManager.shared.searchWithKeyWord(api: .withKeyword(keyword: keyword, page: page, orderBy: orderBy, filterBy: filterBy)) { value in
-            print(#function, "order", self.orderBy)
+        NetworkManager.shared.searchPhoto(api: .withKeyword(keyword: keyword, page: page, orderBy: orderBy, filterBy: filterBy), type: PhotoModel.self) { value in
             if self.page == 1 {
                 if value.total == 0 { self.isNoData = true }
                 else { self.isNoData = false }
@@ -70,6 +69,8 @@ class KeywordSearchViewController: UIViewController {
             if self.page == 1 {
                 self.mainView.collectionView.scrollsToTop = true
             }
+        } failHandler: { error in
+            print("network error", error)
         }
     }
 

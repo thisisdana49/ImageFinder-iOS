@@ -43,20 +43,29 @@ class TopicSearchViewController: UIViewController {
         var fetchedPhotosThree: [PhotoDetail] = []
         
         dispatchGroup.enter()
-        NetworkManager.shared.searchWithTopic(api: PhotoRequest.withTopic(topic: keywords[0])) { value in
+        NetworkManager.shared.searchPhoto(api: .withTopic(topic: keywords[0]), type: [PhotoDetail].self) { value in
             fetchedPhotosOne = value
             dispatchGroup.leave()
-        }
-        
-        dispatchGroup.enter()
-        NetworkManager.shared.searchWithTopic(api: PhotoRequest.withTopic(topic: keywords[1])) { value in
-            fetchedPhotosTwo = value
+        } failHandler: { error in
+            print(error)
             dispatchGroup.leave()
         }
         
         dispatchGroup.enter()
-        NetworkManager.shared.searchWithTopic(api: PhotoRequest.withTopic(topic: keywords[2])) { value in
+        NetworkManager.shared.searchPhoto(api: .withTopic(topic: keywords[1]), type: [PhotoDetail].self) { value in
+            fetchedPhotosTwo = value
+            dispatchGroup.leave()
+        } failHandler: { error in
+            print(error)
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.enter()
+        NetworkManager.shared.searchPhoto(api: .withTopic(topic: keywords[2]), type: [PhotoDetail].self) { value in
             fetchedPhotosThree = value
+            dispatchGroup.leave()
+        } failHandler: { error in
+            print(error)
             dispatchGroup.leave()
         }
         
