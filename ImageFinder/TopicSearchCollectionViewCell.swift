@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class TopicSearchCollectionViewCell: UICollectionViewCell {
+final class TopicSearchCollectionViewCell: UICollectionViewCell {
     
     static let id = "TopicSearchCollectionViewCell"
 
@@ -38,14 +38,14 @@ class TopicSearchCollectionViewCell: UICollectionViewCell {
         starLabel.text = "★ \(item.likes.formatted(.number))"
     }
 
-    internal func configureHierarchy() {
+    private func configureHierarchy() {
         contentView.addSubview(thumbnailImageView)
         contentView.addSubview(starBaseView)
 //        likeBaseView.addSubview(likeButton)
         contentView.addSubview(starLabel)
     }
     
-    internal func configureLayout() {
+    private func configureLayout() {
         thumbnailImageView.snp.makeConstraints { make in
             make.size.equalTo(contentView.snp.size)
             make.center.equalToSuperview()
@@ -62,7 +62,7 @@ class TopicSearchCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    internal func configureView() {
+    private func configureView() {
         thumbnailImageView.contentMode = .scaleAspectFill
         // MARK: 왜 해줘야 하지?
         thumbnailImageView.clipsToBounds = true

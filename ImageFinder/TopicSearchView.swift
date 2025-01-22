@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TopicSearchView: BaseView {
+final class TopicSearchView: BaseView {
     
     let scrollView = UIScrollView()
     let contentView = UIView()
@@ -91,7 +91,7 @@ class TopicSearchView: BaseView {
         titleLabel3.text = "건축 및 인테리어"
     }
     
-    internal func createCollectionViewLayout() -> UICollectionViewFlowLayout {
+    private func createCollectionViewLayout() -> UICollectionViewFlowLayout {
         let spacing: CGFloat = 10
         let deviceWidth = UIScreen.main.bounds.width
         let cellWidth = deviceWidth - 20

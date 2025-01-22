@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class ImageDetailInformView: UIView {
+final class ImageDetailInformView: UIView {
     var titleLabel = UILabel()
     var contentLabel = UILabel()
     
@@ -17,8 +17,6 @@ class ImageDetailInformView: UIView {
         
         addSubview(titleLabel)
         addSubview(contentLabel)
-        
-        titleLabel.textColor = .black
         
         titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
         contentLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)

@@ -8,6 +8,7 @@
 import UIKit
 
 class CustomSearchBar: UISearchBar {
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -28,4 +29,5 @@ class CustomSearchBar: UISearchBar {
             }
         }
     }
+    
 }

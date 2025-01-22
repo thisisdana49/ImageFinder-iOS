@@ -7,7 +7,7 @@
 
 import UIKit
 
-class KeywordSearchView: BaseView {
+final class KeywordSearchView: BaseView {
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     let scrollView = UIScrollView()
@@ -22,7 +22,6 @@ class KeywordSearchView: BaseView {
     let buttonPurple = CustomFilterButton(title: "퍼플", name: "purple", tag: 0)
     let buttonGreen = CustomFilterButton(title: "그린", name: "green", tag: 0)
     let buttonBlue = CustomFilterButton(title: "블루", name: "blue", tag: 0)
-    
     lazy var colorButtons = [buttonBlack, buttonWhite, buttonYellow, buttonRed, buttonPurple, buttonGreen, buttonBlue]
     
     override init(frame: CGRect) {
@@ -83,14 +82,14 @@ class KeywordSearchView: BaseView {
         configureButton()
     }
     
-    func configureButton() {
+    private func configureButton() {
         colorButtons.forEach { button in
             stackView.addArrangedSubview(button)
         }
     }
 
     
-    internal func createCollectionViewLayout() -> UICollectionViewFlowLayout {
+    private func createCollectionViewLayout() -> UICollectionViewFlowLayout {
         let spacing: CGFloat = 5
         let deviceWidth = UIScreen.main.bounds.width
         let cellWidth = deviceWidth - spacing

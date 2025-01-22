@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ImageDetailViewController: UIViewController {
+final class ImageDetailViewController: UIViewController {
     
     var photo: PhotoDetail?
     var photoStatistics: PhotoStatistic?
@@ -26,7 +26,7 @@ class ImageDetailViewController: UIViewController {
         callRequest()
     }
     
-    func configureNavController() {
+    private func configureNavController() {
         navigationItem.largeTitleDisplayMode = .never
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.topItem?.title = ""

@@ -7,15 +7,15 @@
 
 import UIKit
 
-class TopicSearchViewController: UIViewController {
+final class TopicSearchViewController: UIViewController {
     
-    let keywords: [String] = ["golden-hour", "business-work", "architecture-interior"]
+    private let keywords: [String] = ["golden-hour", "business-work", "architecture-interior"]
     
-    var photosOne: [PhotoDetail] = []
-    var photosTwo: [PhotoDetail] = []
-    var photosThree: [PhotoDetail] = []
+    private var photosOne: [PhotoDetail] = []
+    private var photosTwo: [PhotoDetail] = []
+    private var photosThree: [PhotoDetail] = []
     
-    let mainView = TopicSearchView()
+    private let mainView = TopicSearchView()
     
     override func loadView() {
         view = mainView

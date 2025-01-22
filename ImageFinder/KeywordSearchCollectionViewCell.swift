@@ -8,15 +8,15 @@
 import UIKit
 import Kingfisher
 
-class KeywordSearchCollectionViewCell: UICollectionViewCell {
+final class KeywordSearchCollectionViewCell: UICollectionViewCell {
     
     static let id = "KeywordSearchCollectionViewCell"
 
-    let thumbnailImageView = UIImageView()
-    let starBaseView =  UILabel()
-    let starLabel = BasePaddingLabel()
-    let likeBaseView = UIView()
-    let likeButton = UIButton()
+    private let thumbnailImageView = UIImageView()
+    private let starBaseView =  UILabel()
+    private let starLabel = BasePaddingLabel()
+    private let likeBaseView = UIView()
+    private let likeButton = UIButton()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,13 +38,13 @@ class KeywordSearchCollectionViewCell: UICollectionViewCell {
         starLabel.text = "★ \(item.likes.formatted(.number))"
     }
 
-    internal func configureHierarchy() {
+    private func configureHierarchy() {
         contentView.addSubview(thumbnailImageView)
         contentView.addSubview(starBaseView)
         contentView.addSubview(starLabel)
     }
     
-    internal func configureLayout() {
+    private func configureLayout() {
         thumbnailImageView.snp.makeConstraints { make in
             make.size.equalTo(contentView.snp.size)
             make.center.equalToSuperview()
@@ -61,7 +61,7 @@ class KeywordSearchCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    internal func configureView() {
+    private func configureView() {
         clipsToBounds = true
         thumbnailImageView.contentMode = .scaleAspectFill
         starLabel.backgroundColor = .black.withAlphaComponent(0.3)

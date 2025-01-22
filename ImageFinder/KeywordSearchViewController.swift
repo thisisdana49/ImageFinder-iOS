@@ -7,35 +7,35 @@
 
 import UIKit
 
-class KeywordSearchViewController: UIViewController {
+final class KeywordSearchViewController: UIViewController {
 
     var photos: [PhotoDetail] = []
-    var keyword: String = "" {
+    private var keyword: String = "" {
         didSet {
             page = 1
             filterBy = nil
         }
     }
-    var orderBy: String = "relevant" {
+    private var orderBy: String = "relevant" {
         didSet {
             page = 1
         }
     }
     
-    var filterBy: String? = nil {
+    private var filterBy: String? = nil {
         didSet {
             page = 1
         }
     }
     
-    var page: Int = 1
-    var totalPages: Int = 0
-    var isEnd: Bool {
+    private var page: Int = 1
+    private var totalPages: Int = 0
+    private var isEnd: Bool {
         return totalPages > 0 && page >= totalPages
     }
-    var isNoData: Bool = false
+    private var isNoData: Bool = false
     
-    let mainView = KeywordSearchView()
+    private let mainView = KeywordSearchView()
     
     override func loadView() {
         view = mainView
@@ -75,14 +75,14 @@ class KeywordSearchViewController: UIViewController {
     }
 
     @objc
-    func orderButtonTapped(_ sender: UIButton) {
+    private func orderButtonTapped(_ sender: UIButton) {
         sender.isSelected.toggle()
         orderBy = sender.isSelected ? "latest" : "relevant"
         callRequest()
     }
     
     @objc
-    func colorButtonTapped(_ sender: CustomFilterButton) {
+    private func colorButtonTapped(_ sender: CustomFilterButton) {
         sender.isSelected.toggle()
         mainView.colorButtons.forEach { button in
             if sender != button {
@@ -99,7 +99,7 @@ class KeywordSearchViewController: UIViewController {
         callRequest()
     }
     
-    func configureNavController() {
+    private func configureNavController() {
         let searchController = UISearchController()
         let customSearchBar = CustomSearchBar()
         customSearchBar.delegate = self
@@ -169,7 +169,7 @@ extension KeywordSearchViewController: UICollectionViewDelegate, UICollectionVie
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    func configureCollectionView() {
+    private func configureCollectionView() {
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
         mainView.collectionView.prefetchDataSource = self

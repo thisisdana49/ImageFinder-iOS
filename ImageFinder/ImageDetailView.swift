@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ImageDetailView: BaseView {
+final class ImageDetailView: BaseView {
     
     let scrollView = UIScrollView()
     let contentView = UIView()
