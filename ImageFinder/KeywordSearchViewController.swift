@@ -16,8 +16,17 @@ class KeywordSearchViewController: UIViewController {
             filterBy = nil
         }
     }
-    var orderBy: String = "relevant"
-    var filterBy: String? = nil
+    var orderBy: String = "relevant" {
+        didSet {
+            page = 1
+        }
+    }
+    
+    var filterBy: String? = nil {
+        didSet {
+            page = 1
+        }
+    }
     
     var page: Int = 1
     var totalPages: Int = 0
@@ -46,7 +55,7 @@ class KeywordSearchViewController: UIViewController {
     
     private func callRequest() {
         NetworkManager.shared.searchWithKeyWord(api: .withKeyword(keyword: keyword, page: page, orderBy: orderBy, filterBy: filterBy)) { value in
-            print(#function, "color", self.filterBy)
+            print(#function, "order", self.orderBy)
             if self.page == 1 {
                 if value.total == 0 { self.isNoData = true }
                 else { self.isNoData = false }

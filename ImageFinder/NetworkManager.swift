@@ -70,6 +70,9 @@ class NetworkManager {
     func searchWithKeyWord(api: PhotoRequest, completionHandler: @escaping (PhotoModel) -> Void) {
         AF.request(api.endPoint, method: api.method, parameters: api.parameter, headers: api.header)
             .validate(statusCode: 200..<300)
+            .responseString(completionHandler: { data in
+                print(data)
+            })
             .responseDecodable(of: PhotoModel.self) { response in
                 switch response.result {
                 case .success(let value):
