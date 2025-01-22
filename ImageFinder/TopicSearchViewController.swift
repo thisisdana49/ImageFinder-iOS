@@ -46,27 +46,51 @@ final class TopicSearchViewController: UIViewController {
         NetworkManager.shared.searchPhoto(api: .withTopic(topic: keywords[0]), type: [PhotoDetail].self) { value in
             fetchedPhotosOne = value
             dispatchGroup.leave()
-        } failHandler: { error in
-            print(error)
+        } failHandler: { errorMessage in
             dispatchGroup.leave()
+            AlertManager.shared.showAlert(
+                on: self,
+                title: "네트워크 오류",
+                message: errorMessage,
+                actions: [
+                    UIAlertAction(title: "확인", style: .default),
+                    UIAlertAction(title: "취소", style: .cancel)
+                ]
+            )
         }
         
         dispatchGroup.enter()
         NetworkManager.shared.searchPhoto(api: .withTopic(topic: keywords[1]), type: [PhotoDetail].self) { value in
             fetchedPhotosTwo = value
             dispatchGroup.leave()
-        } failHandler: { error in
-            print(error)
+        } failHandler: { errorMessage in
             dispatchGroup.leave()
+            AlertManager.shared.showAlert(
+                on: self,
+                title: "네트워크 오류",
+                message: errorMessage,
+                actions: [
+                    UIAlertAction(title: "확인", style: .default),
+                    UIAlertAction(title: "취소", style: .cancel)
+                ]
+            )
         }
         
         dispatchGroup.enter()
         NetworkManager.shared.searchPhoto(api: .withTopic(topic: keywords[2]), type: [PhotoDetail].self) { value in
             fetchedPhotosThree = value
             dispatchGroup.leave()
-        } failHandler: { error in
-            print(error)
+        } failHandler: { errorMessage in
             dispatchGroup.leave()
+            AlertManager.shared.showAlert(
+                on: self,
+                title: "네트워크 오류",
+                message: errorMessage,
+                actions: [
+                    UIAlertAction(title: "확인", style: .default),
+                    UIAlertAction(title: "취소", style: .cancel)
+                ]
+            )
         }
         
         dispatchGroup.notify(queue: .main) {

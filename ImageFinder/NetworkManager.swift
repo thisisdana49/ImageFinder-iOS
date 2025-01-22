@@ -68,10 +68,10 @@ final class NetworkManager {
     private init() {}
     
     func searchPhoto<T: Decodable>(
-            api: PhotoRequest,
-            type: T.Type,
-            successHandler: @escaping (T) -> Void,
-            failHandler: @escaping (AFError) -> Void
+        api: PhotoRequest,
+        type: T.Type,
+        successHandler: @escaping (T) -> Void,
+        failHandler: @escaping (String) -> Void
     ) {
         AF.request(api.endPoint, method: api.method, parameters: api.parameter, headers: api.header)
             .validate(statusCode: 200..<300)
@@ -80,9 +80,30 @@ final class NetworkManager {
                 case .success(let value):
                     successHandler(value)
                 case .failure(let error):
-                    failHandler(error)
+                    let statusCode = response.response?.statusCode
+                    let errorMessage = self.handleHTTPError(statusCode: statusCode, error: error)
+                    failHandler(errorMessage)
                 }
             }
     }
+    
+    private func handleHTTPError(statusCode: Int?, error: AFError) -> String {
+            guard let code = statusCode else { return "네트워크 오류가 발생했습니다. 다시 시도해주세요." }
+            
+            switch code {
+            case 400:
+                return "잘못된 요청입니다. 입력값을 확인해주세요."
+            case 401:
+                return "인증에 실패했습니다. 다시 로그인해주세요."
+            case 403:
+                return "권한이 없습니다. 관리자에게 문의하세요."
+            case 404:
+                return "요청한 리소스를 찾을 수 없습니다."
+            case 500, 503:
+                return "서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요."
+            default:
+                return "알 수 없는 오류가 발생했습니다. 코드: \(code)"
+            }
+        }
     
 }

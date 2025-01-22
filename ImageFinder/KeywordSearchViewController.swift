@@ -69,8 +69,16 @@ final class KeywordSearchViewController: UIViewController {
             if self.page == 1 {
                 self.mainView.collectionView.scrollsToTop = true
             }
-        } failHandler: { error in
-            print("network error", error)
+        } failHandler: { errorMessage in
+            AlertManager.shared.showAlert(
+                on: self,
+                title: "네트워크 오류",
+                message: errorMessage,
+                actions: [
+                    UIAlertAction(title: "확인", style: .default),
+                    UIAlertAction(title: "취소", style: .cancel)
+                ]
+            )
         }
     }
 

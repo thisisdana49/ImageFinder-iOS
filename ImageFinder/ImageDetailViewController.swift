@@ -36,8 +36,16 @@ final class ImageDetailViewController: UIViewController {
         NetworkManager.shared.searchPhoto(api: .withID(id: photoID), type: PhotoStatistic.self) { value in
             self.photoStatistics = value
             self.mainView.configureData(photo: self.photo, photoStatistics: self.photoStatistics)
-        } failHandler: { error in
-            print("network error", error)
+        } failHandler: { errorMessage in
+            AlertManager.shared.showAlert(
+                on: self,
+                title: "네트워크 오류",
+                message: errorMessage,
+                actions: [
+                    UIAlertAction(title: "확인", style: .default),
+                    UIAlertAction(title: "취소", style: .cancel)
+                ]
+            )
         }
     }
     
