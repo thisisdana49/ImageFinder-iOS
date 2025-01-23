@@ -37,6 +37,13 @@ struct PhotoDetail: Decodable {
     }
 }
 
+struct PhotoURLs: Decodable {
+    let raw: String
+    let full: String
+    let small: String
+    let thumb: String
+}
+
 struct PhotoStatistic: Decodable {
     let views: PhotoViews
     let downloads: PhotoDownloads
@@ -48,15 +55,4 @@ struct PhotoViews: Decodable {
 
 struct PhotoDownloads: Decodable {
     let total: Int
-}
-
-struct PhotoURLs: Decodable {
-    let raw: String
-    let full: String
-    let small: String
-    let thumb: String
-}
-
-struct User: Decodable {
-    let name: String
 }

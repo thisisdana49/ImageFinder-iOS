@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class ProfileViewController: UIViewController {
-
+    
     let nicknameButton = UIButton()
     let birthdayButton = UIButton()
     let levelButton = UIButton()
@@ -23,13 +23,17 @@ class ProfileViewController: UIViewController {
         configureView()
     }
 
-    @objc func okButtonTapped() {
-        print(#function)
+    @objc func cancelButtonTapped() {
+        UserDefaultsManager.set(to: true, forKey: .isFirst)
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let window = windowScene.windows.first else { return }
+        
+        window.rootViewController = UINavigationController(rootViewController: OnboardingViewController())
+        window.makeKeyAndVisible()
     }
     
     func configureView() {
         navigationItem.title = "프로필 화면"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "탈퇴하기", style: .plain, target: self, action: #selector(okButtonTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "탈퇴하기", style: .plain, target: self, action: #selector(cancelButtonTapped))
         view.backgroundColor = .white
         
         view.addSubview(nicknameButton)

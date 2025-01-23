@@ -9,7 +9,8 @@ import UIKit
 import SnapKit
 
 class OnboardingViewController: UIViewController {
-
+    
+    var isFirst = false
     let button = UIButton()
     
     override func viewDidLoad() {
@@ -24,7 +25,17 @@ class OnboardingViewController: UIViewController {
         button.backgroundColor = .white
         button.setTitleColor(.darkGray, for: .normal)
         button.setTitle("시작하기", for: .normal)
+        button.addTarget(self, action: #selector(startButtonClicked), for: .touchUpInside)
     }
     
- 
+    @objc
+    func startButtonClicked() {
+        UserDefaultsManager.set(to: isFirst, forKey: .isFirst)
+        print(UserDefaultsManager.get(forKey: .isFirst) as! Bool)
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let window = windowScene.windows.first else { return }
+
+        window.rootViewController = UINavigationController(rootViewController: ProfileViewController())
+        window.makeKeyAndVisible()
+    }
+    
 }
