@@ -10,6 +10,7 @@ import SnapKit
 
 class LevelViewController: UIViewController {
 
+    var contents: PassDataDelegate?
     let segmentedControl = UISegmentedControl(items: ["상", "중", "하"])
     
     override func viewDidLoad() {
@@ -18,7 +19,9 @@ class LevelViewController: UIViewController {
     }
     
     @objc func okButtonTapped() {
-        print(#function)
+        let selectedIndex = segmentedControl.selectedSegmentIndex
+        contents?.levelValueReceive(value: segmentedControl.titleForSegment(at: selectedIndex) ?? "오류")
+        navigationController?.popViewController(animated: true)
     }
     
     func configureView() {

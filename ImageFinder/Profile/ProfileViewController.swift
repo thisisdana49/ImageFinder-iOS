@@ -50,7 +50,8 @@ class ProfileViewController: UIViewController {
     
     @objc
     func nicknameButtonTapped() {
-        navigationController?.pushViewController(NicknameViewController(), animated: true)
+        let vc = NicknameViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc
@@ -65,7 +66,9 @@ class ProfileViewController: UIViewController {
     
     @objc
     func levelButtonTapped() {
-        navigationController?.pushViewController(LevelViewController(), animated: true)
+        let vc = LevelViewController()
+        vc.contents = self
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func configureView() {
@@ -134,7 +137,7 @@ class ProfileViewController: UIViewController {
         
         nicknameButton.addTarget(self, action: #selector(nicknameButtonTapped), for: .touchUpInside)
         birthdayButton.addTarget(self, action: #selector(birthdayButtonTapped), for: .touchUpInside)
-        birthdayButton.addTarget(self, action: #selector(birthdayButtonTapped), for: .touchUpInside)
+        levelButton.addTarget(self, action: #selector(levelButtonTapped), for: .touchUpInside)
 
         nicknameLabel.text = "NO NAME"
         nicknameLabel.textColor = .lightGray
@@ -149,5 +152,12 @@ class ProfileViewController: UIViewController {
         levelLabel.textAlignment = .right
     }
     
- 
+}
+
+extension ProfileViewController: PassDataDelegate {
+    
+    func levelValueReceive(value: String) {
+        levelLabel.text = value
+    }
+    
 }
