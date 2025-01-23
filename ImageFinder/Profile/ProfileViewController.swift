@@ -55,7 +55,12 @@ class ProfileViewController: UIViewController {
     
     @objc
     func birthdayButtonTapped() {
-        navigationController?.pushViewController(BirthdayViewController(), animated: true)
+        let vc = BirthdayViewController()
+        vc.contents = { value in
+            print(#function)
+            self.birthdayLabel.text = value
+        }
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc

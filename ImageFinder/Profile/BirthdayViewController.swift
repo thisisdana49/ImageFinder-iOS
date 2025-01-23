@@ -10,15 +10,24 @@ import SnapKit
 
 class BirthdayViewController: UIViewController {
 
+    var contents: ((String) -> Void)?
     let datePicker = UIDatePicker()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        datePicker.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
         configureView()
     }
     
-    @objc func okButtonTapped() {
-        print(#function)
+    @objc
+    func datePickerValueChanged(_ sender: UIDatePicker) {
+        print(#function, sender.date)
+    }
+    
+    @objc
+    func okButtonTapped() {
+        contents?(datePicker.date.toFormattedString("yyyy년 MM월 dd일"))
+        navigationController?.popViewController(animated: true)
     }
     
     func configureView() {
