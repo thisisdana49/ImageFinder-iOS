@@ -9,6 +9,7 @@ import UIKit
 
 final class ImageDetailViewController: UIViewController {
     
+    
     var photo: PhotoDetail?
     var photoStatistics: PhotoStatistic?
     
