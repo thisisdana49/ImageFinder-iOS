@@ -9,7 +9,7 @@ import UIKit
 
 final class ImageDetailViewController: UIViewController {
     
-    
+    let viewModel = ImageDetailViewModel()
     var photo: PhotoDetail?
     var photoStatistics: PhotoStatistic?
     
@@ -23,31 +23,20 @@ final class ImageDetailViewController: UIViewController {
         super.viewDidLoad()
         configureNavController()
         
-        // TODO: 위치에 대한 고민, UI와 관련해서 서비스
-        callRequest()
+        bindData()
+    }
+    
+    private func bindData() {
+        viewModel.input.viewDidLoad.value = ()
+
+        viewModel.output.photoStatistics.lazyBind { [weak self] value in
+            self?.mainView.configureData(photo: self?.viewModel.output.photo.value, photoStatistics: value)
+        }
     }
     
     private func configureNavController() {
         navigationItem.largeTitleDisplayMode = .never
         navigationController?.navigationBar.topItem?.title = ""
-    }
-    
-    private func callRequest() {
-        guard let photoID = photo?.id else { return }
-        NetworkManager.shared.searchPhoto(api: .withID(id: photoID), type: PhotoStatistic.self) { value in
-            self.photoStatistics = value
-            self.mainView.configureData(photo: self.photo, photoStatistics: self.photoStatistics)
-        } failHandler: { errorMessage in
-            AlertManager.shared.showAlert(
-                on: self,
-                title: "네트워크 오류",
-                message: errorMessage,
-                actions: [
-                    UIAlertAction(title: "확인", style: .default),
-                    UIAlertAction(title: "취소", style: .cancel)
-                ]
-            )
-        }
     }
     
 }

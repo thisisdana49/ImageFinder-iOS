@@ -173,7 +173,7 @@ extension KeywordSearchViewController: UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = ImageDetailViewController()
-        vc.photo = photos[indexPath.row]
+        vc.viewModel.input.viewWillLoad.value = photos[indexPath.row]
         
         navigationController?.pushViewController(vc, animated: true)
     }
