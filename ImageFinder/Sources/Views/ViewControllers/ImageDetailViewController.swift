@@ -10,9 +10,6 @@ import UIKit
 final class ImageDetailViewController: UIViewController {
     
     let viewModel = ImageDetailViewModel()
-    var photo: PhotoDetail?
-    var photoStatistics: PhotoStatistic?
-    
     let mainView = ImageDetailView()
     
     override func loadView() {
@@ -30,7 +27,7 @@ final class ImageDetailViewController: UIViewController {
         viewModel.input.viewDidLoad.value = ()
 
         viewModel.output.photoStatistics.lazyBind { [weak self] value in
-            self?.mainView.configureData(photo: self?.viewModel.output.photo.value, photoStatistics: value)
+            self?.mainView.configureData(photo: self?.viewModel.output.photo, photoStatistics: value)
         }
     }
     
