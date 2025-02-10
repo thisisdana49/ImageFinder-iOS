@@ -15,7 +15,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         var vc: UIViewController
         if let userIsFirst = UserDefaultsManager.get(forKey: .isFirst) as? Bool {
-            vc = userIsFirst ? OnboardingViewController() : UINavigationController(rootViewController: ProfileViewController())
+//            vc = userIsFirst ? OnboardingViewController() : UINavigationController(rootViewController: ProfileViewController())
+            vc = userIsFirst ? OnboardingViewController() : TabBarViewController()
         } else {
             vc = OnboardingViewController()
         }

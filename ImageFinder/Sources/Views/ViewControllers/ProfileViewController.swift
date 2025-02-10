@@ -18,6 +18,8 @@ class ProfileViewController: UIViewController {
     let birthdayLabel = UILabel()
     let levelLabel = UILabel()
     
+    let completeButton = UIButton()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -55,6 +57,14 @@ class ProfileViewController: UIViewController {
     }
     
     @objc
+    func completeButtonTapped() {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let window = windowScene.windows.first else { return }
+        
+        window.rootViewController = TabBarViewController()
+        window.makeKeyAndVisible()
+    }
+    
+    @objc
     func birthdayButtonTapped() {
         let vc = BirthdayViewController()
         vc.contents = { value in
@@ -83,6 +93,7 @@ class ProfileViewController: UIViewController {
         view.addSubview(nicknameLabel)
         view.addSubview(birthdayLabel)
         view.addSubview(levelLabel)
+        view.addSubview(completeButton)
         
         nicknameButton.snp.makeConstraints { make in
             make.leading.top.equalTo(view.safeAreaLayoutGuide).inset(24)
@@ -125,7 +136,11 @@ class ProfileViewController: UIViewController {
             make.height.equalTo(50)
         }
 
-        
+        completeButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(24)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(24)
+            make.height.equalTo(44)
+        }
         
         nicknameButton.setTitleColor(.black, for: .normal)
         birthdayButton.setTitleColor(.black, for: .normal)
@@ -138,6 +153,7 @@ class ProfileViewController: UIViewController {
         nicknameButton.addTarget(self, action: #selector(nicknameButtonTapped), for: .touchUpInside)
         birthdayButton.addTarget(self, action: #selector(birthdayButtonTapped), for: .touchUpInside)
         levelButton.addTarget(self, action: #selector(levelButtonTapped), for: .touchUpInside)
+        completeButton.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
 
         nicknameLabel.text = "NO NAME"
         nicknameLabel.textColor = .lightGray
@@ -150,6 +166,9 @@ class ProfileViewController: UIViewController {
         levelLabel.text = "NO LEVEL"
         levelLabel.textColor = .lightGray
         levelLabel.textAlignment = .right
+        
+        completeButton.setTitle("Complete", for: .normal)
+        completeButton.setTitleColor(.black, for: .normal)
     }
     
 }

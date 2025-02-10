@@ -9,7 +9,8 @@ import Foundation
 
 struct User: Codable {
     static let identifier = "User"
-    var nickname: String
-    var birthday: String
-    var level: Int
+    var name: String
+    var nickname: String?
+    var birthday: String?
+    var level: Int?
 }

@@ -55,6 +55,7 @@ final class KeywordSearchViewController: UIViewController {
     
     private func callRequest() {
         NetworkManager.shared.searchPhoto(api: .withKeyword(keyword: keyword, page: page, orderBy: orderBy, filterBy: filterBy), type: PhotoModel.self) { value in
+            print(value)
             if self.page == 1 {
                 if value.total == 0 { self.isNoData = true }
                 else { self.isNoData = false }
