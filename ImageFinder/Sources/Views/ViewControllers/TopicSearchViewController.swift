@@ -143,13 +143,13 @@ extension TopicSearchViewController: UICollectionViewDelegate, UICollectionViewD
         let vc = ImageDetailViewController()
         switch collectionView {
         case mainView.collectionView1 :
-            vc.photo = photosOne[indexPath.row]
+            vc.viewModel.input.viewWillLoad.value = photosOne[indexPath.row]
         case mainView.collectionView2 :
-            vc.photo = photosTwo[indexPath.row]
+            vc.viewModel.input.viewWillLoad.value = photosTwo[indexPath.row]
         case mainView.collectionView3 :
-            vc.photo = photosThree[indexPath.row]
+            vc.viewModel.input.viewWillLoad.value = photosThree[indexPath.row]
         default:
-            vc.photo = photosOne[indexPath.row]
+            vc.viewModel.input.viewWillLoad.value = photosOne[indexPath.row]
         }
         
         navigationController?.pushViewController(vc, animated: true)
